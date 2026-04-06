@@ -1,0 +1,46 @@
+name: Bug Report
+description: Report a bug or unexpected behavior
+labels: ["bug"]
+body:
+  - type: textarea
+    attributes:
+      label: Description
+      description: What happened? What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: Minimal steps to reproduce the issue
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: i18n-fixer version
+      description: Output of `i18n-fixer version`
+      placeholder: "v0.1.0"
+  - type: dropdown
+    attributes:
+      label: Framework/Preset
+      options:
+        - react-i18next
+        - react-intl
+        - vue-i18n
+        - angular
+        - ngx-translate
+        - svelte-i18n
+        - next-intl
+        - nuxt-i18n
+        - ember-intl
+        - flutter
+        - ios-swift
+        - android-kotlin
+        - react-native
+        - custom preset
+  - type: dropdown
+    attributes:
+      label: OS
+      options:
+        - macOS
+        - Linux
+        - Windows
