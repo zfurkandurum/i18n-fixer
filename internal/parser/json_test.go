@@ -75,11 +75,20 @@ func TestDetectLocale(t *testing.T) {
 		path     string
 		expected string
 	}{
+		// Filename-as-locale (namespace pattern): auth/en.json → "en"
+		{"src/assets/i18n/auth/en.json", "en"},
+		{"src/assets/i18n/auth/fr.json", "fr"},
+		{"src/assets/i18n/common/de.json", "de"},
+		{"src/assets/i18n/layout/es.json", "es"},
+		// Directory-as-locale: locales/en/common.json → "en"
 		{"src/locales/en/common.json", "en"},
 		{"src/locales/fr/common.json", "fr"},
+		// Android: values-fr → "fr"
 		{"res/values-fr/strings.xml", "fr"},
 		{"res/values/strings.xml", "default"},
+		// Flutter ARB: app_en.arb → "en"
 		{"lib/l10n/app_en.arb", "en"},
+		// Direct filename
 		{"en.json", "en"},
 		{"zh-CN.json", "zh-CN"},
 	}
