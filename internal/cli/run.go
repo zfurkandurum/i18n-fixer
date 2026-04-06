@@ -155,6 +155,12 @@ func runAudit(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	// Auto-generate output file for prompt format (AI prompt is meant to be
+	// copied to an AI agent, not read in the terminal)
+	if format == "prompt" && output == "" {
+		output = "i18n-fix-prompt.md"
+	}
+
 	var w io.Writer = os.Stdout
 	if output != "" {
 		f, err := os.Create(output)
@@ -163,9 +169,7 @@ func runAudit(cmd *cobra.Command, args []string) error {
 		}
 		defer f.Close()
 		w = f
-		if verbose {
-			fmt.Fprintf(os.Stderr, "Writing report to %s\n", output)
-		}
+		fmt.Fprintf(os.Stderr, "Report written to %s\n", output)
 	}
 
 	if err := rep.Report(finalResult, w); err != nil {
