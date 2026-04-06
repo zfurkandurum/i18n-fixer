@@ -1,0 +1,10 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "old": {
+    "unused": "This key is not used anywhere"
+  }
+}
