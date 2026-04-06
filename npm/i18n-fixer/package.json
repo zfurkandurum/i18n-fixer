@@ -1,6 +1,6 @@
 {
   "name": "i18n-fixer",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Framework-agnostic CLI to find hardcoded strings, missing & unused i18n keys. Generates AI-ready fix prompts.",
   "bin": {
     "i18n-fixer": "bin/i18n-fixer"
@@ -36,6 +36,10 @@
     "type": "git",
     "url": "https://github.com/zfurkandurum/i18n-fixer.git"
   },
+  "files": [
+    "bin/",
+    "README.md"
+  ],
   "license": "MIT",
   "engines": {
     "node": ">=16.0.0"
