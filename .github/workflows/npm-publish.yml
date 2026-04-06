@@ -16,12 +16,27 @@ jobs:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Get latest release tag
+        id: tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            TAG="${GITHUB_REF#refs/tags/}"
+          else
+            TAG=$(gh release view --json tagName -q .tagName)
+          fi
+          VERSION="${TAG#v}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Using tag: $TAG, version: $VERSION"
+
       - name: Download release binaries
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG="${GITHUB_REF#refs/tags/}"
-          VERSION="${TAG#v}"
+          TAG="${{ steps.tag.outputs.tag }}"
+          VERSION="${{ steps.tag.outputs.version }}"
           mkdir -p dist
 
           PLATFORMS=(
@@ -39,18 +54,19 @@ jobs:
             else
               ARCHIVE="i18n-fixer_${VERSION}_${platform}.tar.gz"
             fi
-            gh release download "$TAG" -p "$ARCHIVE" -D dist/ || echo "Skipping $ARCHIVE"
+            echo "Downloading $ARCHIVE..."
+            gh release download "$TAG" -p "$ARCHIVE" -D dist/ || echo "Warning: $ARCHIVE not found, skipping"
           done
 
           # Extract archives
           cd dist
           for f in *.tar.gz; do [ -f "$f" ] && tar xzf "$f" && rm "$f"; done
           for f in *.zip; do [ -f "$f" ] && unzip -o "$f" && rm "$f"; done
+          ls -la
 
       - name: Prepare npm packages
         run: |
-          TAG="${GITHUB_REF#refs/tags/}"
-          VERSION="${TAG#v}"
+          VERSION="${{ steps.tag.outputs.version }}"
           bash scripts/prepare-npm.sh "$VERSION" dist
 
       - name: Publish platform packages
