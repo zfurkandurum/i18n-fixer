@@ -1,0 +1,69 @@
+name: Publish npm
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Download release binaries
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          VERSION="${TAG#v}"
+          mkdir -p dist
+
+          PLATFORMS=(
+            "darwin_arm64"
+            "darwin_amd64_v1"
+            "linux_amd64_v1"
+            "linux_arm64"
+            "windows_amd64_v1"
+            "windows_arm64"
+          )
+
+          for platform in "${PLATFORMS[@]}"; do
+            if [[ "$platform" == windows_* ]]; then
+              ARCHIVE="i18n-fixer_${VERSION}_${platform}.zip"
+            else
+              ARCHIVE="i18n-fixer_${VERSION}_${platform}.tar.gz"
+            fi
+            gh release download "$TAG" -p "$ARCHIVE" -D dist/ || echo "Skipping $ARCHIVE"
+          done
+
+          # Extract archives
+          cd dist
+          for f in *.tar.gz; do [ -f "$f" ] && tar xzf "$f" && rm "$f"; done
+          for f in *.zip; do [ -f "$f" ] && unzip -o "$f" && rm "$f"; done
+
+      - name: Prepare npm packages
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          VERSION="${TAG#v}"
+          bash scripts/prepare-npm.sh "$VERSION" dist
+
+      - name: Publish platform packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          for dir in npm/i18n-fixer-*/; do
+            if [ -d "$dir" ]; then
+              echo "Publishing $dir..."
+              cd "$dir" && npm publish --access public && cd ../..
+            fi
+          done
+
+      - name: Publish main package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: cd npm/i18n-fixer && npm publish --access public
