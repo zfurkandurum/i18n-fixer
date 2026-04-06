@@ -1,0 +1,32 @@
+# Binaries
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test
+coverage.out
+coverage.html
+*.test
+
+# Build
+dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Go
+vendor/
+
+# npm platform binaries (generated at release time)
+npm/i18n-fixer-*/
