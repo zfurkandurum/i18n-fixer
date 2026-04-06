@@ -5,8 +5,9 @@
   "i18nFunctionPatterns": [
     "translate\\.instant\\(['\"](?P<key>[^'\"]+)['\"]",
     "translate\\.get\\(['\"](?P<key>[^'\"]+)['\"]",
-    "\\|\\s*translate",
-    "\\[translate\\]=\"['\"](?P<key>[^'\"]+)['\"]",
+    "'(?P<key>[A-Z][A-Z0-9_]*(\\.[A-Z][A-Z0-9_]*)*)'\\s*\\|\\s*translate",
+    "\"(?P<key>[A-Z][A-Z0-9_]*(\\.[A-Z][A-Z0-9_]*)*)\"\\s*\\|\\s*translate",
+    "\\[translate\\]=\"'(?P<key>[^']+)'\"",
     "translateService\\.instant\\(['\"](?P<key>[^'\"]+)['\"]"
   ],
   "hardcodedStringPatterns": [
