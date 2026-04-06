@@ -1,0 +1,43 @@
+{
+  "name": "i18n-fixer",
+  "version": "0.1.0",
+  "description": "Framework-agnostic CLI to find hardcoded strings, missing & unused i18n keys. Generates AI-ready fix prompts.",
+  "bin": {
+    "i18n-fixer": "bin/i18n-fixer"
+  },
+  "optionalDependencies": {
+    "i18n-fixer-darwin-arm64": "0.1.0",
+    "i18n-fixer-darwin-x64": "0.1.0",
+    "i18n-fixer-linux-x64": "0.1.0",
+    "i18n-fixer-linux-arm64": "0.1.0",
+    "i18n-fixer-win32-x64": "0.1.0",
+    "i18n-fixer-win32-arm64": "0.1.0"
+  },
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "l10n",
+    "localization",
+    "audit",
+    "lint",
+    "translation",
+    "cli",
+    "react",
+    "vue",
+    "angular",
+    "flutter",
+    "ios",
+    "android",
+    "ai",
+    "prompt"
+  ],
+  "homepage": "https://github.com/i18n-fixer/i18n-fixer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/i18n-fixer/i18n-fixer.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
