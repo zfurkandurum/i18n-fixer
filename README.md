@@ -42,8 +42,8 @@
 # Just run in your project directory — framework auto-detected
 i18n-fixer
 
-# Generate AI fix prompt
-i18n-fixer -f prompt -o fix.md
+# Generate AI fix prompt (auto-saves to i18n-fix-prompt.md)
+i18n-fixer -f prompt
 
 # JSON report for CI
 i18n-fixer -f json -o report.json
@@ -111,8 +111,11 @@ i18n-fixer ./frontend
 # Use a specific preset
 i18n-fixer --preset vue-i18n
 
-# Generate AI prompt to fix all issues
-i18n-fixer -f prompt -o fix-prompt.md
+# Generate AI prompt (auto-saves to i18n-fix-prompt.md)
+i18n-fixer -f prompt
+
+# Or specify a custom output path
+i18n-fixer -f prompt -o my-fix.md
 
 # JSON output for CI pipelines
 i18n-fixer -f json -o report.json
@@ -181,10 +184,14 @@ i18n-fixer --preset ./my-preset.json
 
 ## AI Prompt Output
 
-The `--format prompt` flag generates a structured Markdown document containing all findings. Paste it into Claude, ChatGPT, or any AI assistant to automatically fix the issues:
+The `--format prompt` flag generates a structured Markdown document containing all findings. It automatically saves to `i18n-fix-prompt.md` in your current directory. Paste it into Claude, ChatGPT, or any AI assistant to automatically fix the issues:
 
 ```bash
-i18n-fixer -f prompt -o fix.md
+# Auto-saves to i18n-fix-prompt.md
+i18n-fixer -f prompt
+
+# Or specify a custom path
+i18n-fixer -f prompt -o custom-fix.md
 ```
 
 The generated prompt includes:
