@@ -1,0 +1,39 @@
+{
+  "name": "android-kotlin",
+  "displayName": "Android (Kotlin/Java)",
+  "fileExtensions": [".kt", ".java", ".xml"],
+  "i18nFunctionPatterns": [
+    "getString\\(R\\.string\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)",
+    "resources\\.getString\\(R\\.string\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)",
+    "context\\.getString\\(R\\.string\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)",
+    "@string/(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)",
+    "stringResource\\(R\\.string\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)"
+  ],
+  "hardcodedStringPatterns": [
+    "android:text=\"(?P<str>[A-Z][^\"]{2,})\"",
+    "android:hint=\"(?P<str>[^\"]{2,})\"",
+    "android:contentDescription=\"(?P<str>[^\"]{2,})\"",
+    "Text\\(text[\\s]*=[\\s]*\"(?P<str>[^\"]{2,})\"",
+    "Toast\\.makeText\\([^,]+,[\\s]*\"(?P<str>[^\"]{2,})\""
+  ],
+  "hardcodedStringExclusions": [
+    "^https?://",
+    "^@",
+    "^\\s*$",
+    "^[0-9.,]+$",
+    "tools:text"
+  ],
+  "i18nFilePatterns": [
+    "**/res/values*/strings.xml"
+  ],
+  "i18nFileFormat": "xml",
+  "keyStyle": "flat",
+  "keySeparator": "_",
+  "projectMarkers": [
+    { "file": "build.gradle", "containsAny": ["android"] },
+    { "file": "build.gradle.kts", "containsAny": ["android"] }
+  ],
+  "ignorePatterns": [
+    "**/build/**", "**/.gradle/**", "**/.git/**"
+  ]
+}

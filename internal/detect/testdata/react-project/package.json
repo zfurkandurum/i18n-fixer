@@ -1,0 +1,8 @@
+{
+  "name": "test-react-app",
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-i18next": "^13.0.0",
+    "i18next": "^23.0.0"
+  }
+}
