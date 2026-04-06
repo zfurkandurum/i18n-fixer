@@ -61,6 +61,10 @@ func runAudit(cmd *cobra.Command, args []string) error {
 	noHardcoded, _ := cmd.Flags().GetBool("no-hardcoded")
 	noMissing, _ := cmd.Flags().GetBool("no-missing")
 	noUnused, _ := cmd.Flags().GetBool("no-unused")
+	noDuplicates, _ := cmd.Flags().GetBool("no-duplicates")
+	noNaming, _ := cmd.Flags().GetBool("no-naming")
+	noCompleteness, _ := cmd.Flags().GetBool("no-completeness")
+	keyConvention, _ := cmd.Flags().GetString("key-convention")
 
 	if format == "" {
 		format = cfg.Format
@@ -126,9 +130,13 @@ func runAudit(cmd *cobra.Command, args []string) error {
 
 		// Analyze
 		result := analyzer.Analyze(scanResult, i18nEntries, p.KeySeparator, analyzer.Options{
-			NoMissing:   noMissing || cfg.NoMissing,
-			NoUnused:    noUnused || cfg.NoUnused,
-			NoHardcoded: noHardcoded || cfg.NoHardcoded,
+			NoMissing:           noMissing || cfg.NoMissing,
+			NoUnused:            noUnused || cfg.NoUnused,
+			NoHardcoded:         noHardcoded || cfg.NoHardcoded,
+			NoDuplicates:        noDuplicates,
+			NoNaming:            noNaming,
+			NoCompleteness:      noCompleteness,
+			KeyNamingConvention: keyConvention,
 		})
 
 		result.Summary.FilesScanned = countSourceFiles(rootDir, p)

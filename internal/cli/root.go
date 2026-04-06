@@ -51,6 +51,10 @@ func init() {
 	rootCmd.PersistentFlags().Bool("no-unused", false, "skip unused key detection")
 	rootCmd.PersistentFlags().StringSlice("ignore", nil, "additional glob patterns to ignore")
 	rootCmd.PersistentFlags().Bool("strict-unused", false, "disable dynamic key heuristic exclusion")
+	rootCmd.PersistentFlags().Bool("no-duplicates", false, "skip duplicate key detection")
+	rootCmd.PersistentFlags().Bool("no-naming", false, "skip key naming convention lint")
+	rootCmd.PersistentFlags().Bool("no-completeness", false, "skip locale completeness analysis")
+	rootCmd.PersistentFlags().String("key-convention", "", "key naming convention: UPPER_SNAKE, lower.dot, camelCase, kebab-case")
 	rootCmd.PersistentFlags().Bool("verbose", false, "show detailed scanning progress")
 	rootCmd.PersistentFlags().Bool("no-color", false, "disable colored output")
 }

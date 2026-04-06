@@ -69,9 +69,44 @@ func (r *ConsoleReporter) Report(result *types.AuditResult, w io.Writer) error {
 		}
 	}
 
+	// Locale Completeness
+	if len(result.LocaleCoverage) > 0 {
+		fmt.Fprintf(w, "━━━ LOCALE COMPLETENESS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n")
+		fmt.Fprintf(w, "  ┌──────────┬───────┬───────┬──────────┐\n")
+		fmt.Fprintf(w, "  │ Locale   │ Keys  │ Total │ Coverage │\n")
+		fmt.Fprintf(w, "  ├──────────┼───────┼───────┼──────────┤\n")
+		for _, c := range result.LocaleCoverage {
+			fmt.Fprintf(w, "  │ %-8s │ %5d │ %5d │ %5.1f%%   │\n", c.Locale, c.HasKeys, c.TotalKeys, c.Percentage)
+		}
+		fmt.Fprintf(w, "  └──────────┴───────┴───────┴──────────┘\n\n")
+	}
+
+	// Duplicate Keys
+	if len(result.DuplicateKeys) > 0 {
+		fmt.Fprintf(w, "━━━ DUPLICATE KEYS (%d) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n", len(result.DuplicateKeys))
+		for _, issue := range result.DuplicateKeys {
+			fmt.Fprintf(w, "  %s [%s]\n", issue.Key, issue.Locale)
+			for _, v := range issue.Values {
+				fmt.Fprintf(w, "    \"%s\" — %s\n", v.Value, v.File)
+			}
+			fmt.Fprintf(w, "\n")
+		}
+	}
+
+	// Key Naming Issues
+	if len(result.KeyNamingIssues) > 0 {
+		fmt.Fprintf(w, "━━━ KEY NAMING ISSUES (%d) ━━━━━━━━━━━━━━━━━━━━━━━━━\n\n", len(result.KeyNamingIssues))
+		fmt.Fprintf(w, "  Expected convention: %s\n\n", result.KeyNamingIssues[0].Expected)
+		for _, issue := range result.KeyNamingIssues {
+			fmt.Fprintf(w, "  %-40s %s\n", issue.Key, issue.File)
+		}
+		fmt.Fprintf(w, "\n")
+	}
+
 	// Summary
 	total := result.Summary.MissingKeyCount + result.Summary.UnusedKeyCount +
-		result.Summary.HardcodedStringCount + result.Summary.DynamicKeyCount
+		result.Summary.HardcodedStringCount + result.Summary.DynamicKeyCount +
+		result.Summary.DuplicateKeyCount + result.Summary.KeyNamingIssueCount
 
 	fmt.Fprintf(w, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n")
 	fmt.Fprintf(w, "  Summary:\n")
@@ -80,7 +115,12 @@ func (r *ConsoleReporter) Report(result *types.AuditResult, w io.Writer) error {
 	fmt.Fprintf(w, "  │ Unused keys          │ %5d │\n", result.Summary.UnusedKeyCount)
 	fmt.Fprintf(w, "  │ Hardcoded strings    │ %5d │\n", result.Summary.HardcodedStringCount)
 	fmt.Fprintf(w, "  │ Dynamic keys (warn)  │ %5d │\n", result.Summary.DynamicKeyCount)
+	fmt.Fprintf(w, "  │ Duplicate keys       │ %5d │\n", result.Summary.DuplicateKeyCount)
+	fmt.Fprintf(w, "  │ Naming violations    │ %5d │\n", result.Summary.KeyNamingIssueCount)
 	fmt.Fprintf(w, "  │ Total issues         │ %5d │\n", total)
+	if result.Summary.OverallCompleteness > 0 {
+		fmt.Fprintf(w, "  │ Overall completeness │ %4.1f%% │\n", result.Summary.OverallCompleteness)
+	}
 	fmt.Fprintf(w, "  └──────────────────────┴───────┘\n")
 	fmt.Fprintf(w, "\n")
 
