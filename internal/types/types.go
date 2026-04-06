@@ -88,6 +88,35 @@ type LocaleLocation struct {
 	Locale string
 }
 
+// LocaleCoverage represents translation completeness for a single locale.
+type LocaleCoverage struct {
+	Locale     string
+	TotalKeys  int
+	HasKeys    int
+	Percentage float64
+}
+
+// DuplicateKeyIssue represents a key with conflicting values in the same locale.
+type DuplicateKeyIssue struct {
+	Key    string
+	Locale string
+	Values []DuplicateValue
+}
+
+// DuplicateValue is a value + file pair for a duplicate key.
+type DuplicateValue struct {
+	Value string
+	File  string
+}
+
+// KeyNamingIssue represents a key that violates the naming convention.
+type KeyNamingIssue struct {
+	Key        string
+	Expected   string
+	File       string
+	Locale     string
+}
+
 // AuditResult holds all findings from a scan.
 type AuditResult struct {
 	Summary          AuditSummary
@@ -95,6 +124,9 @@ type AuditResult struct {
 	UnusedKeys       []UnusedKeyIssue
 	HardcodedStrings []HardcodedStringIssue
 	DynamicKeys      []DynamicKeyWarning
+	LocaleCoverage   []LocaleCoverage
+	DuplicateKeys    []DuplicateKeyIssue
+	KeyNamingIssues  []KeyNamingIssue
 	Metadata         AuditMetadata
 }
 
@@ -108,6 +140,9 @@ type AuditSummary struct {
 	UnusedKeyCount       int
 	HardcodedStringCount int
 	DynamicKeyCount      int
+	DuplicateKeyCount    int
+	KeyNamingIssueCount  int
+	OverallCompleteness  float64
 }
 
 // AuditMetadata provides context about the scan.

@@ -12,6 +12,9 @@ func Analyze(scanResult *scanner.ScanResult, i18nEntries []types.I18nEntry, keyS
 	var missingKeys []types.MissingKeyIssue
 	var unusedKeys []types.UnusedKeyIssue
 	var hardcodedStrings []types.HardcodedStringIssue
+	var localeCoverage []types.LocaleCoverage
+	var duplicateKeys []types.DuplicateKeyIssue
+	var keyNamingIssues []types.KeyNamingIssue
 
 	if !opts.NoMissing {
 		missingKeys = FindMissingKeys(scanResult.UsedKeys, i18nEntries, locales)
@@ -25,6 +28,23 @@ func Analyze(scanResult *scanner.ScanResult, i18nEntries []types.I18nEntry, keyS
 		hardcodedStrings = GroupHardcodedStrings(scanResult.Hardcoded, keySeparator)
 	}
 
+	if !opts.NoCompleteness {
+		localeCoverage = AnalyzeCompleteness(i18nEntries, locales)
+	}
+
+	if !opts.NoDuplicates {
+		duplicateKeys = FindDuplicateKeys(i18nEntries)
+	}
+
+	if !opts.NoNaming {
+		keyNamingIssues = LintKeyNaming(i18nEntries, opts.KeyNamingConvention)
+	}
+
+	var overallCompleteness float64
+	if localeCoverage != nil {
+		overallCompleteness = OverallCompleteness(localeCoverage)
+	}
+
 	return &types.AuditResult{
 		Summary: types.AuditSummary{
 			Locales:              locales,
@@ -33,19 +53,29 @@ func Analyze(scanResult *scanner.ScanResult, i18nEntries []types.I18nEntry, keyS
 			UnusedKeyCount:       len(unusedKeys),
 			HardcodedStringCount: len(hardcodedStrings),
 			DynamicKeyCount:      len(scanResult.DynamicKeys),
+			DuplicateKeyCount:    len(duplicateKeys),
+			KeyNamingIssueCount:  len(keyNamingIssues),
+			OverallCompleteness:  overallCompleteness,
 		},
 		MissingKeys:      missingKeys,
 		UnusedKeys:       unusedKeys,
 		HardcodedStrings: hardcodedStrings,
 		DynamicKeys:      scanResult.DynamicKeys,
+		LocaleCoverage:   localeCoverage,
+		DuplicateKeys:    duplicateKeys,
+		KeyNamingIssues:  keyNamingIssues,
 	}
 }
 
 // Options controls which analyzers to run.
 type Options struct {
-	NoMissing   bool
-	NoUnused    bool
-	NoHardcoded bool
+	NoMissing           bool
+	NoUnused            bool
+	NoHardcoded         bool
+	NoCompleteness      bool
+	NoDuplicates        bool
+	NoNaming            bool
+	KeyNamingConvention string
 }
 
 func extractLocales(entries []types.I18nEntry) []string {
