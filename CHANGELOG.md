@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-04-06
+
+### Added
+
+- Locale completeness percentage — shows translation coverage per locale
+- Duplicate key detection — finds same key with conflicting values across files
+- Key naming convention lint — validates UPPER_SNAKE, lower.dot, camelCase, kebab-case with auto-detection
+- CLI flags: `--no-duplicates`, `--no-naming`, `--no-completeness`, `--key-convention`
+- Overall completeness percentage in summary
+
+### Fixed
+
+- HTML template scanning: Angular `{{ 'KEY' | translate }}` pipe syntax now correctly extracts keys (reduced false unused key reports by ~73%)
+
 ## [0.1.0] - 2026-04-06
 
 ### Added

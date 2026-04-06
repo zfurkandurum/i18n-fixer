@@ -30,7 +30,11 @@
 - Finds **missing** translation keys (used in code, absent from i18n files)
 - Finds **unused** translation keys (in i18n files, never referenced in code)
 - Detects **hardcoded** user-facing strings not wrapped in i18n functions
+- **Locale completeness %** — see translation coverage per locale at a glance
+- **Duplicate key detection** — finds conflicting values for the same key
+- **Key naming lint** — enforces UPPER_SNAKE, lower.dot, camelCase, or kebab-case
 - Generates **AI-ready fix prompts** — paste into Claude/GPT to auto-fix
+- **HTML template scanning** — catches keys in Angular pipes, Vue templates, etc.
 - **Fast** — parallel scanning via goroutines
 - **Single binary** — no Node.js, Python, or any runtime needed
 - **Extensible** — add any framework via custom preset JSON
@@ -204,16 +208,20 @@ The generated prompt includes:
 
 ### Feature Comparison
 
-| Feature | i18n-fixer | i18next-scanner | eslint-plugin-i18next | i18n-unused | i18n-ally (VS Code) |
-|---------|-----------|-----------------|----------------------|-------------|-------------------|
-| Missing keys | :white_check_mark: | :white_check_mark: | :x: | :white_check_mark: | :white_check_mark: |
-| Unused keys | :white_check_mark: | :x: | :x: | :white_check_mark: | :white_check_mark: |
-| Hardcoded strings | :white_check_mark: | :x: | :white_check_mark: | :x: | :white_check_mark: |
-| AI prompt output | :white_check_mark: | :x: | :x: | :x: | :x: |
-| Auto framework detect | :white_check_mark: | :x: | :x: | :x: | :white_check_mark: |
-| Zero config | :white_check_mark: | :x: | :x: | :x: | :white_check_mark: |
-| Single binary | :white_check_mark: | :x: | :x: | :x: | :x: |
-| CI/CD friendly | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x: |
+| Feature | i18n-fixer | i18next-scanner | eslint-plugin-i18next | i18n-unused | i18n-ally (VS Code) | i18n-tasks (Ruby) |
+|---------|-----------|-----------------|----------------------|-------------|-------------------|-------------------|
+| Missing keys | :white_check_mark: | :white_check_mark: | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Unused keys | :white_check_mark: | :x: | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Hardcoded strings | :white_check_mark: | :x: | :white_check_mark: | :x: | :white_check_mark: | :x: |
+| AI prompt output | :white_check_mark: | :x: | :x: | :x: | :x: | :x: |
+| Locale completeness % | :white_check_mark: | :x: | :x: | :x: | :white_check_mark: | :white_check_mark: |
+| Duplicate key detection | :white_check_mark: | :x: | :x: | :x: | :x: | :white_check_mark: |
+| Key naming lint | :white_check_mark: | :x: | :x: | :x: | :x: | :x: |
+| HTML template scanning | :white_check_mark: | :x: | :x: | :x: | :white_check_mark: | :x: |
+| Auto framework detect | :white_check_mark: | :x: | :x: | :x: | :white_check_mark: | :x: |
+| Zero config | :white_check_mark: | :x: | :x: | :x: | :white_check_mark: | :x: |
+| Single binary | :white_check_mark: | :x: | :x: | :x: | :x: | :x: |
+| CI/CD friendly | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x: | :white_check_mark: |
 
 ### Framework Support
 
