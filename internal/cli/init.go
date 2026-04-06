@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/i18n-fixer/i18n-fixer/internal/detect"
+	"github.com/zfurkandurum/i18n-fixer/internal/detect"
 	"github.com/spf13/cobra"
 )
 

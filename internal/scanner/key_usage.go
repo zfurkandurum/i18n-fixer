@@ -5,7 +5,7 @@ import (
 	"os"
 	"regexp"
 
-	"github.com/i18n-fixer/i18n-fixer/internal/types"
+	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
 // ScanKeyUsage scans a source file for i18n function calls and extracts keys.

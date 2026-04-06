@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/i18n-fixer/i18n-fixer/internal/preset"
+	"github.com/zfurkandurum/i18n-fixer/internal/preset"
 	"github.com/spf13/cobra"
 )
 

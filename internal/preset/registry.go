@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/i18n-fixer/i18n-fixer/internal/types"
+	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
 //go:embed builtin/*.json

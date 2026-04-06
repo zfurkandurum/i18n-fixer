@@ -4,7 +4,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/i18n-fixer/i18n-fixer/internal/types"
+	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
 func TestAnalyzeCompleteness(t *testing.T) {

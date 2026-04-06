@@ -1,7 +1,7 @@
 package analyzer
 
 import (
-	"github.com/i18n-fixer/i18n-fixer/internal/types"
+	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
 // FindUnusedKeys finds keys in translation files that are never used in code.

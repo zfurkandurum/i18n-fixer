@@ -1,8 +1,8 @@
 package analyzer
 
 import (
-	"github.com/i18n-fixer/i18n-fixer/internal/scanner"
-	"github.com/i18n-fixer/i18n-fixer/internal/types"
+	"github.com/zfurkandurum/i18n-fixer/internal/scanner"
+	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
 // Analyze runs all analyzers and produces the final audit result.

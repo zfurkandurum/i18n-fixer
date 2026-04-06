@@ -7,7 +7,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/i18n-fixer/i18n-fixer/internal/types"
+	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
 // ScanHardcoded scans a source file for hardcoded user-facing strings.

@@ -3,7 +3,7 @@ package analyzer
 import (
 	"testing"
 
-	"github.com/i18n-fixer/i18n-fixer/internal/types"
+	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
 func TestFindMissingKeys(t *testing.T) {

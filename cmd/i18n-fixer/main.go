@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/i18n-fixer/i18n-fixer/internal/cli"
+	"github.com/zfurkandurum/i18n-fixer/internal/cli"
 )
 
 var (

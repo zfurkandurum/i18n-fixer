@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/i18n-fixer/i18n-fixer/internal/types"
+	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
 // ParseJSON reads a JSON i18n file and returns flattened entries.

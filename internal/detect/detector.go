@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/i18n-fixer/i18n-fixer/internal/preset"
-	"github.com/i18n-fixer/i18n-fixer/internal/types"
+	"github.com/zfurkandurum/i18n-fixer/internal/preset"
+	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
 // Detect auto-detects frameworks in the given project directory.

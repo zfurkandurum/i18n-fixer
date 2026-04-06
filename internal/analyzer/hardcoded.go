@@ -4,7 +4,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/i18n-fixer/i18n-fixer/internal/types"
+	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
 // GroupHardcodedStrings deduplicates and groups hardcoded strings by value,

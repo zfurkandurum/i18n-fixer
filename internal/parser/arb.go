@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/i18n-fixer/i18n-fixer/internal/types"
+	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
 // ParseARB reads a Flutter .arb file (JSON with @-prefixed metadata) and returns entries.

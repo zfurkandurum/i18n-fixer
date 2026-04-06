@@ -7,7 +7,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/i18n-fixer/i18n-fixer/internal/types"
+	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
 // ScanResult holds all findings from scanning source files.

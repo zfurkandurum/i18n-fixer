@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/i18n-fixer/i18n-fixer/internal/types"
+	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
 // JSONReporter writes machine-readable JSON output.

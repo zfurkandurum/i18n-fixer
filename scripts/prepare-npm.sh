@@ -62,7 +62,7 @@ for entry in "${PLATFORMS[@]}"; do
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/i18n-fixer/i18n-fixer.git"
+    "url": "https://github.com/zfurkandurum/i18n-fixer.git"
   }
 }
 PKGJSON

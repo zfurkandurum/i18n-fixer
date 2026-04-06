@@ -9,7 +9,7 @@
 
 ## Reporting a Vulnerability
 
-Please report security issues via [GitHub Security Advisories](https://github.com/i18n-fixer/i18n-fixer/security/advisories/new).
+Please report security issues via [GitHub Security Advisories](https://github.com/zfurkandurum/i18n-fixer/security/advisories/new).
 
 **Do NOT open a public issue for security vulnerabilities.**
 

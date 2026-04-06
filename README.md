@@ -1,7 +1,7 @@
 # i18n-fixer
 
-[![CI](https://github.com/i18n-fixer/i18n-fixer/actions/workflows/ci.yml/badge.svg)](https://github.com/i18n-fixer/i18n-fixer/actions/workflows/ci.yml)
-[![Go Reference](https://pkg.go.dev/badge/github.com/i18n-fixer/i18n-fixer.svg)](https://pkg.go.dev/github.com/i18n-fixer/i18n-fixer)
+[![CI](https://github.com/zfurkandurum/i18n-fixer/actions/workflows/ci.yml/badge.svg)](https://github.com/zfurkandurum/i18n-fixer/actions/workflows/ci.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/zfurkandurum/i18n-fixer.svg)](https://pkg.go.dev/github.com/zfurkandurum/i18n-fixer)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 > Framework-agnostic CLI tool that finds hardcoded strings, missing i18n keys, and unused translations. Generates AI-ready fix prompts. Works with every major frontend and mobile framework.
@@ -74,12 +74,12 @@ npm install -g i18n-fixer
 ### Go
 
 ```bash
-go install github.com/i18n-fixer/i18n-fixer/cmd/i18n-fixer@latest
+go install github.com/zfurkandurum/i18n-fixer/cmd/i18n-fixer@latest
 ```
 
 ### Binary Download
 
-Download from [GitHub Releases](https://github.com/i18n-fixer/i18n-fixer/releases).
+Download from [GitHub Releases](https://github.com/zfurkandurum/i18n-fixer/releases).
 
 ## Usage
 

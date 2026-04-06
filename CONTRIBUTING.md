@@ -61,4 +61,4 @@ internal/
 
 ## Questions?
 
-Open a [Discussion](https://github.com/i18n-fixer/i18n-fixer/discussions) or file an issue.
+Open a [Discussion](https://github.com/zfurkandurum/i18n-fixer/discussions) or file an issue.

@@ -1,4 +1,4 @@
-module github.com/i18n-fixer/i18n-fixer
+module github.com/zfurkandurum/i18n-fixer
 
 go 1.26.1
 

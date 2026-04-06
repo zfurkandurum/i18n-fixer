@@ -31,10 +31,10 @@
     "ai",
     "prompt"
   ],
-  "homepage": "https://github.com/i18n-fixer/i18n-fixer",
+  "homepage": "https://github.com/zfurkandurum/i18n-fixer",
   "repository": {
     "type": "git",
-    "url": "https://github.com/i18n-fixer/i18n-fixer.git"
+    "url": "https://github.com/zfurkandurum/i18n-fixer.git"
   },
   "license": "MIT",
   "engines": {

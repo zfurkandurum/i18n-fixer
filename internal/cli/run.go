@@ -9,14 +9,14 @@ import (
 	"time"
 
 	"github.com/bmatcuk/doublestar/v4"
-	"github.com/i18n-fixer/i18n-fixer/internal/analyzer"
-	"github.com/i18n-fixer/i18n-fixer/internal/config"
-	"github.com/i18n-fixer/i18n-fixer/internal/detect"
-	"github.com/i18n-fixer/i18n-fixer/internal/parser"
-	"github.com/i18n-fixer/i18n-fixer/internal/preset"
-	"github.com/i18n-fixer/i18n-fixer/internal/reporter"
-	"github.com/i18n-fixer/i18n-fixer/internal/scanner"
-	"github.com/i18n-fixer/i18n-fixer/internal/types"
+	"github.com/zfurkandurum/i18n-fixer/internal/analyzer"
+	"github.com/zfurkandurum/i18n-fixer/internal/config"
+	"github.com/zfurkandurum/i18n-fixer/internal/detect"
+	"github.com/zfurkandurum/i18n-fixer/internal/parser"
+	"github.com/zfurkandurum/i18n-fixer/internal/preset"
+	"github.com/zfurkandurum/i18n-fixer/internal/reporter"
+	"github.com/zfurkandurum/i18n-fixer/internal/scanner"
+	"github.com/zfurkandurum/i18n-fixer/internal/types"
 	"github.com/spf13/cobra"
 )
 

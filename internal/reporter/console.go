@@ -5,7 +5,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/i18n-fixer/i18n-fixer/internal/types"
+	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
 // ConsoleReporter writes a human-readable colored report to the terminal.
