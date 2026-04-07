@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/zfurkandurum/i18n-fixer/internal/types"
@@ -29,7 +28,7 @@ func init() {
 			continue
 		}
 
-		data, err := builtinFS.ReadFile(filepath.Join("builtin", entry.Name()))
+		data, err := builtinFS.ReadFile("builtin/" + entry.Name())
 		if err != nil {
 			continue
 		}
