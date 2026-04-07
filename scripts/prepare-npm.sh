@@ -9,10 +9,10 @@ DIST_DIR="${2:-dist}"
 
 PLATFORMS=(
   "darwin-arm64:darwin_arm64"
-  "darwin-x64:darwin_amd64_v1"
-  "linux-x64:linux_amd64_v1"
+  "darwin-x64:darwin_amd64"
+  "linux-x64:linux_amd64"
   "linux-arm64:linux_arm64"
-  "win32-x64:windows_amd64_v1"
+  "win32-x64:windows_amd64"
   "win32-arm64:windows_arm64"
 )
 
@@ -32,12 +32,10 @@ for entry in "${PLATFORMS[@]}"; do
     BIN_NAME="i18n-fixer.exe"
   fi
 
-  # Copy binary from GoReleaser output
-  # GoReleaser archives extract to versioned dirs (e.g. i18n-fixer_0.3.3_darwin_arm64)
-  # so search for the binary anywhere under DIST_DIR matching the platform
-  SRC=$(find "${DIST_DIR}" -name "${BIN_NAME}" -path "*${GO_PLATFORM}*" 2>/dev/null | head -1)
-  if [ -z "${SRC}" ]; then
-    echo "  Warning: binary for ${GO_PLATFORM} not found in ${DIST_DIR}, skipping"
+  # Copy binary from platform subdirectory created by the download step
+  SRC="${DIST_DIR}/i18n-fixer_${GO_PLATFORM}/${BIN_NAME}"
+  if [ ! -f "${SRC}" ]; then
+    echo "  Warning: ${SRC} not found, skipping"
     continue
   fi
 
