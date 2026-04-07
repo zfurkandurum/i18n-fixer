@@ -16,13 +16,16 @@
     "^[/#.]",
     "^\\s*$",
     "^[0-9.,]+$",
+    "^\\{",
     "class=\"",
     "import\\s"
   ],
   "i18nFilePatterns": [
-    "src/lib/i18n/**/*.json",
-    "src/locales/**/*.json",
-    "src/lang/**/*.json"
+    "**/locales/**/*.json",
+    "**/locale/**/*.json",
+    "**/i18n/**/*.json",
+    "**/lang/**/*.json",
+    "**/translations/**/*.json"
   ],
   "i18nFileFormat": "json",
   "keyStyle": "nested",
@@ -31,6 +34,12 @@
     { "file": "package.json", "containsAny": ["svelte-i18n"] }
   ],
   "ignorePatterns": [
-    "**/node_modules/**", "**/.svelte-kit/**", "**/build/**", "**/.git/**"
+    "**/node_modules/**",
+    "**/.svelte-kit/**",
+    "**/build/**",
+    "**/.git/**",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/__tests__/**"
   ]
 }

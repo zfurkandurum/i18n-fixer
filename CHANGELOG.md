@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-04-07
+
+### Fixed
+
+- **Template expression false positives** — added `{{`, `{`, `{%`, `<%=` exclusions to all 31 presets so Angular/Vue/Svelte/Django/Rails template syntax is never flagged as a hardcoded string
+- **Test file scanning** — all presets now exclude test/spec files (`*.spec.ts`, `*_test.dart`, `*_spec.rb`, `*Test.kt`, etc.) to prevent fixture strings from polluting reports
+- **Flutter dot-notation false positives** — `"key.name".tr()` inside `Text()` calls no longer reported as hardcoded string
+- **flutter-easy-localization: `tr('key')` function-call pattern** — added `tr('key')` and `translate('key')` patterns alongside the existing `'key'.tr()` extension style
+
+## [0.3.0] - 2026-04-07
+
+### Added
+
+- **18 new built-in presets** (total: 31)
+  - JavaScript/TypeScript: `i18next`, `next-i18next`, `next-translate`, `lingui`, `typesafe-i18n`, `inlang-paraglide`
+  - Flutter: `flutter-easy-localization`, `flutter-getx`, `flutter-slang`
+  - iOS/Swift: `ios-swiftui`, `ios-swiftgen`, `ios-xcstrings`
+  - Android: `android-compose`
+  - React Native: `react-native-i18n-js`
+  - Backend/Templates: `django`, `rails-erb`, `laravel-blade`, `go-i18n`
+- **`i18n-ignore` annotation** — add `// i18n-ignore` (or any comment style) to a line to suppress false positives
+- **`.xcstrings` parser** — Apple String Catalog format (Xcode 15+) with full plural variant support; auto-detected by file extension
+- **GitHub Actions integration** — `action.yml` for `uses: zfurkandurum/i18n-fixer@v1`
+- **Pre-commit hook** — `.pre-commit-hooks.yaml` for pre-commit framework integration
+- **HTML/template file scanning** — `.html`, `.tmpl`, `.erb`, `.blade.php` extensions covered by new presets
+- **`xcstrings`** added as a valid `i18nFileFormat` value in custom presets
+
 ## [0.2.0] - 2026-04-06
 
 ### Added

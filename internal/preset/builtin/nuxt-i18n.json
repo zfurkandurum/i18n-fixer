@@ -16,13 +16,19 @@
     "^[/#.]",
     "^\\s*$",
     "^[0-9.,]+$",
+    "^\\{\\{",
+    "\\$t\\(",
     "class=\"",
     "import\\s"
   ],
   "i18nFilePatterns": [
-    "locales/**/*.json",
-    "i18n/**/*.json",
-    "lang/**/*.json"
+    "**/locales/**/*.json",
+    "**/locale/**/*.json",
+    "**/i18n/**/*.json",
+    "**/lang/**/*.json",
+    "**/translations/**/*.json",
+    "**/locales/**/*.yaml",
+    "**/locales/**/*.yml"
   ],
   "i18nFileFormat": "json",
   "keyStyle": "nested",
@@ -31,6 +37,12 @@
     { "file": "package.json", "containsAny": ["@nuxtjs/i18n"] }
   ],
   "ignorePatterns": [
-    "**/node_modules/**", "**/.nuxt/**", "**/.output/**", "**/.git/**"
+    "**/node_modules/**",
+    "**/.nuxt/**",
+    "**/.output/**",
+    "**/.git/**",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/__tests__/**"
   ]
 }

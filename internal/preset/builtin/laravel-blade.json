@@ -1,0 +1,55 @@
+{
+  "name": "laravel-blade",
+  "displayName": "Laravel (Blade / PHP)",
+  "fileExtensions": [".php", ".blade.php"],
+  "i18nFunctionPatterns": [
+    "__\\(['\"](?P<key>[^'\"]+)['\"]",
+    "trans\\(['\"](?P<key>[^'\"]+)['\"]",
+    "trans_choice\\(['\"](?P<key>[^'\"]+)['\"]",
+    "Lang::get\\(['\"](?P<key>[^'\"]+)['\"]",
+    "@lang\\(['\"](?P<key>[^'\"]+)['\"]"
+  ],
+  "hardcodedStringPatterns": [
+    ">[\\s]*(?P<str>[A-Z][a-zA-Z0-9 ,.!?'\\-]{2,})[\\s]*<",
+    "(?:placeholder|title|alt|aria-label|label)=['\"](?P<str>[^'\"]{2,})['\"]",
+    "->with\\('(?:message|error|success|notice)',\\s*['\"](?P<str>[^'\"]{2,})['\"]",
+    "session\\(\\)->flash\\('[^']+',\\s*['\"](?P<str>[^'\"]{2,})['\"]"
+  ],
+  "hardcodedStringExclusions": [
+    "^https?://",
+    "^[/#.]",
+    "^[a-z]+(_[a-z]+)*$",
+    "^\\s*$",
+    "^[0-9.,]+$",
+    "^//",
+    "^\\{\\{",
+    "namespace\\s",
+    "use\\s",
+    "class\\s",
+    "function\\s"
+  ],
+  "i18nFilePatterns": [
+    "lang/**/*.php",
+    "resources/lang/**/*.php",
+    "lang/**/*.json",
+    "resources/lang/**/*.json"
+  ],
+  "i18nFileFormat": "json",
+  "keyStyle": "flat",
+  "keySeparator": ".",
+  "projectMarkers": [
+    { "file": "artisan", "containsAny": ["laravel"] },
+    { "file": "composer.json", "containsAny": ["laravel/framework"] }
+  ],
+  "ignorePatterns": [
+    "**/vendor/**",
+    "**/node_modules/**",
+    "**/storage/**",
+    "**/bootstrap/cache/**",
+    "**/.git/**",
+    "**/public/**",
+    "**/tests/**",
+    "**/*Test.php",
+    "**/*_test.php"
+  ]
+}

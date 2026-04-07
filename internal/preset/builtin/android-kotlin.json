@@ -34,6 +34,13 @@
     { "file": "build.gradle.kts", "containsAny": ["android"] }
   ],
   "ignorePatterns": [
-    "**/build/**", "**/.gradle/**", "**/.git/**"
+    "**/build/**",
+    "**/.gradle/**",
+    "**/.git/**",
+    "**/*Test.kt",
+    "**/*Tests.kt",
+    "**/*Test.java",
+    "**/test/**",
+    "**/androidTest/**"
   ]
 }

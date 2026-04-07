@@ -16,15 +16,24 @@
     "^[/#.]",
     "^\\s*$",
     "^[0-9.,]+$",
+    "^\\{\\{",
     "class=\"",
     "\\*ngIf",
     "\\*ngFor",
     "import\\s"
   ],
   "i18nFilePatterns": [
-    "src/locale/**/*.json",
-    "src/locale/**/*.xlf",
-    "src/assets/i18n/**/*.json"
+    "**/i18n/**/*.json",
+    "**/i18n/**/*.xlf",
+    "**/locale/**/*.json",
+    "**/locale/**/*.xlf",
+    "**/locales/**/*.json",
+    "**/locales/**/*.xlf",
+    "**/lang/**/*.json",
+    "**/translations/**/*.json",
+    "**/assets/i18n/**/*.json",
+    "**/assets/locales/**/*.json",
+    "**/assets/lang/**/*.json"
   ],
   "i18nFileFormat": "json",
   "keyStyle": "flat",
@@ -33,6 +42,13 @@
     { "file": "package.json", "containsAny": ["@angular/localize"] }
   ],
   "ignorePatterns": [
-    "**/node_modules/**", "**/dist/**", "**/.git/**", "**/.angular/**"
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/.git/**",
+    "**/.angular/**",
+    "**/coverage/**",
+    "**/*.spec.ts",
+    "**/*.spec.html",
+    "**/tests/**"
   ]
 }

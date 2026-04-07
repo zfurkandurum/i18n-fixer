@@ -1,11 +1,10 @@
 {
-  "name": "react-intl",
-  "displayName": "React (FormatJS/react-intl)",
-  "fileExtensions": [".tsx", ".ts", ".jsx", ".js"],
+  "name": "typesafe-i18n",
+  "displayName": "typesafe-i18n",
+  "fileExtensions": [".tsx", ".ts", ".jsx", ".js", ".svelte"],
   "i18nFunctionPatterns": [
-    "intl\\.formatMessage\\(\\{[^}]*id:\\s*['\"](?P<key>[^'\"]+)['\"]",
-    "<FormattedMessage[^>]+id=['\"](?P<key>[^'\"]+)['\"]",
-    "defineMessages\\([^)]*['\"](?P<key>[^'\"]+)['\"]"
+    "\\bLL\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z0-9_]*)*)\\(",
+    "locale\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z0-9_]*)*)\\("
   ],
   "hardcodedStringPatterns": [
     ">[\\s]*(?P<str>[A-Z][a-zA-Z0-9 ,.!?'\\-]{2,})[\\s]*<",
@@ -23,25 +22,23 @@
     "import\\s"
   ],
   "i18nFilePatterns": [
+    "**/i18n/**/*.json",
     "**/locales/**/*.json",
     "**/locale/**/*.json",
-    "**/i18n/**/*.json",
     "**/lang/**/*.json",
-    "**/translations/**/*.json",
-    "**/messages/**/*.json"
+    "**/translations/**/*.json"
   ],
   "i18nFileFormat": "json",
-  "keyStyle": "flat",
+  "keyStyle": "nested",
   "keySeparator": ".",
   "projectMarkers": [
-    { "file": "package.json", "containsAny": ["react-intl", "@formatjs/intl"] }
+    { "file": "package.json", "containsAny": ["typesafe-i18n"] }
   ],
   "ignorePatterns": [
     "**/node_modules/**",
     "**/dist/**",
     "**/build/**",
     "**/.git/**",
-    "**/coverage/**",
     "**/*.test.*",
     "**/*.spec.*",
     "**/__tests__/**"

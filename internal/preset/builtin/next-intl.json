@@ -16,13 +16,17 @@
     "^[/#.]",
     "^\\s*$",
     "^[0-9.,]+$",
+    "^\\{",
     "className=",
     "import\\s"
   ],
   "i18nFilePatterns": [
-    "messages/**/*.json",
-    "src/messages/**/*.json",
-    "locales/**/*.json"
+    "**/messages/**/*.json",
+    "**/locales/**/*.json",
+    "**/locale/**/*.json",
+    "**/i18n/**/*.json",
+    "**/lang/**/*.json",
+    "**/translations/**/*.json"
   ],
   "i18nFileFormat": "json",
   "keyStyle": "nested",
@@ -31,6 +35,12 @@
     { "file": "package.json", "containsAny": ["next-intl"] }
   ],
   "ignorePatterns": [
-    "**/node_modules/**", "**/.next/**", "**/out/**", "**/.git/**"
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/out/**",
+    "**/.git/**",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/__tests__/**"
   ]
 }

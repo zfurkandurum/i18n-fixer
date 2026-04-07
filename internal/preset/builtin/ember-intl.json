@@ -16,13 +16,16 @@
     "^[/#.]",
     "^\\s*$",
     "^[0-9.,]+$",
+    "^\\{\\{",
     "class=\"",
     "import\\s"
   ],
   "i18nFilePatterns": [
-    "translations/**/*.json",
-    "translations/**/*.yaml",
-    "translations/**/*.yml"
+    "**/translations/**/*.json",
+    "**/translations/**/*.yaml",
+    "**/translations/**/*.yml",
+    "**/locales/**/*.json",
+    "**/i18n/**/*.json"
   ],
   "i18nFileFormat": "json",
   "keyStyle": "nested",
@@ -31,6 +34,12 @@
     { "file": "package.json", "containsAny": ["ember-intl"] }
   ],
   "ignorePatterns": [
-    "**/node_modules/**", "**/dist/**", "**/tmp/**", "**/.git/**"
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/tmp/**",
+    "**/.git/**",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/tests/**"
   ]
 }

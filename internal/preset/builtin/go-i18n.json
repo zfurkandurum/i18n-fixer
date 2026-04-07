@@ -1,0 +1,55 @@
+{
+  "name": "go-i18n",
+  "displayName": "Go (go-i18n / html/template)",
+  "fileExtensions": [".go", ".html", ".tmpl"],
+  "i18nFunctionPatterns": [
+    "i18n\\.MustLocalize\\(&i18n\\.LocalizeConfig\\{MessageID:\\s*['\"](?P<key>[^'\"]+)['\"]",
+    "localizer\\.MustLocalize\\(&i18n\\.LocalizeConfig\\{MessageID:\\s*['\"](?P<key>[^'\"]+)['\"]",
+    "i18n\\.Sprintf\\(['\"](?P<key>[^'\"]+)['\"]",
+    "\\bT\\(['\"](?P<key>[^'\"]+)['\"]",
+    "{{\\s*i18n\\s+['\"](?P<key>[^'\"]+)['\"]",
+    "{{\\s*t\\s+['\"](?P<key>[^'\"]+)['\"]"
+  ],
+  "hardcodedStringPatterns": [
+    ">[\\s]*(?P<str>[A-Z][a-zA-Z0-9 ,.!?'\\-]{2,})[\\s]*<",
+    "(?:placeholder|title|alt|aria-label|label)=['\"](?P<str>[^'\"]{2,})['\"]",
+    "fmt\\.Fprintf\\([^,]+,\\s*['\"](?P<str>[A-Z][^'\"]{2,})['\"]",
+    "errors\\.New\\(['\"](?P<str>[^'\"]{2,})['\"]",
+    "fmt\\.Errorf\\(['\"](?P<str>[^'\"]{2,})['\"]"
+  ],
+  "hardcodedStringExclusions": [
+    "^https?://",
+    "^[/#.]",
+    "^[a-z]+(_[a-z]+)*$",
+    "^\\s*$",
+    "^[0-9.,]+$",
+    "^//",
+    "import\\s",
+    "package\\s",
+    "log\\.",
+    "%[sdvf]"
+  ],
+  "i18nFilePatterns": [
+    "**/locales/**/*.json",
+    "**/locales/**/*.yaml",
+    "**/locales/**/*.toml",
+    "**/locale/**/*.json",
+    "**/locale/**/*.yaml",
+    "**/i18n/**/*.json",
+    "**/i18n/**/*.yaml",
+    "**/lang/**/*.json",
+    "**/translations/**/*.json"
+  ],
+  "i18nFileFormat": "json",
+  "keyStyle": "flat",
+  "keySeparator": ".",
+  "projectMarkers": [
+    { "file": "go.mod", "containsAny": ["nicksnyder/go-i18n", "go-i18n"] }
+  ],
+  "ignorePatterns": [
+    "**/vendor/**",
+    "**/.git/**",
+    "**/testdata/**",
+    "**/*_test.go"
+  ]
+}

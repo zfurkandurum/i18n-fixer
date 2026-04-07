@@ -1,12 +1,10 @@
 {
-  "name": "flutter",
-  "displayName": "Flutter (intl/ARB)",
+  "name": "flutter-slang",
+  "displayName": "Flutter (slang)",
   "fileExtensions": [".dart"],
   "i18nFunctionPatterns": [
-    "AppLocalizations\\.of\\(context\\)\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)",
-    "S\\.of\\(context\\)\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)",
-    "S\\.current\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)",
-    "context\\.l10n\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)"
+    "\\bt\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z0-9_]*)+)",
+    "AppLocale\\.[a-zA-Z]+\\.translations\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z0-9_]*)*)"
   ],
   "hardcodedStringPatterns": [
     "Text\\([\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
@@ -25,15 +23,18 @@
     "^[a-z_]+$"
   ],
   "i18nFilePatterns": [
-    "lib/l10n/**/*.arb",
-    "lib/l10n/*.arb",
-    "assets/l10n/**/*.arb"
+    "**/i18n/**/*.json",
+    "**/i18n/**/*.arb",
+    "**/assets/i18n/**/*.json",
+    "**/assets/i18n/**/*.arb",
+    "**/locales/**/*.json",
+    "**/lang/**/*.json"
   ],
-  "i18nFileFormat": "arb",
-  "keyStyle": "flat",
-  "keySeparator": "_",
+  "i18nFileFormat": "json",
+  "keyStyle": "nested",
+  "keySeparator": ".",
   "projectMarkers": [
-    { "file": "pubspec.yaml", "containsAny": ["flutter"] }
+    { "file": "pubspec.yaml", "containsAny": ["slang"] }
   ],
   "ignorePatterns": [
     "**/.dart_tool/**",
@@ -41,6 +42,7 @@
     "**/.git/**",
     "**/*.g.dart",
     "**/*.freezed.dart",
+    "**/*_strings.g.dart",
     "**/*_test.dart",
     "**/test/**"
   ]

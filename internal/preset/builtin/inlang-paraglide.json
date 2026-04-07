@@ -1,11 +1,9 @@
 {
-  "name": "react-intl",
-  "displayName": "React (FormatJS/react-intl)",
-  "fileExtensions": [".tsx", ".ts", ".jsx", ".js"],
+  "name": "inlang-paraglide",
+  "displayName": "Inlang / Paraglide",
+  "fileExtensions": [".tsx", ".ts", ".jsx", ".js", ".svelte", ".vue"],
   "i18nFunctionPatterns": [
-    "intl\\.formatMessage\\(\\{[^}]*id:\\s*['\"](?P<key>[^'\"]+)['\"]",
-    "<FormattedMessage[^>]+id=['\"](?P<key>[^'\"]+)['\"]",
-    "defineMessages\\([^)]*['\"](?P<key>[^'\"]+)['\"]"
+    "\\bm\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)\\("
   ],
   "hardcodedStringPatterns": [
     ">[\\s]*(?P<str>[A-Z][a-zA-Z0-9 ,.!?'\\-]{2,})[\\s]*<",
@@ -23,25 +21,25 @@
     "import\\s"
   ],
   "i18nFilePatterns": [
+    "**/messages/**/*.json",
     "**/locales/**/*.json",
     "**/locale/**/*.json",
     "**/i18n/**/*.json",
-    "**/lang/**/*.json",
-    "**/translations/**/*.json",
-    "**/messages/**/*.json"
+    "**/lang/**/*.json"
   ],
   "i18nFileFormat": "json",
   "keyStyle": "flat",
-  "keySeparator": ".",
+  "keySeparator": "_",
   "projectMarkers": [
-    { "file": "package.json", "containsAny": ["react-intl", "@formatjs/intl"] }
+    { "file": "package.json", "containsAny": ["@inlang/paraglide", "paraglide"] },
+    { "file": "project.inlang/settings.json" }
   ],
   "ignorePatterns": [
     "**/node_modules/**",
     "**/dist/**",
     "**/build/**",
     "**/.git/**",
-    "**/coverage/**",
+    "**/paraglide/**",
     "**/*.test.*",
     "**/*.spec.*",
     "**/__tests__/**"

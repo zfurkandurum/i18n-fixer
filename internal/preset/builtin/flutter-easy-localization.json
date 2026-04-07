@@ -1,0 +1,54 @@
+{
+  "name": "flutter-easy-localization",
+  "displayName": "Flutter (easy_localization)",
+  "fileExtensions": [".dart"],
+  "i18nFunctionPatterns": [
+    "['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.]*)['\"]\\s*\\.tr\\(\\)",
+    "['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.]*)['\"]\\s*\\.plural\\(",
+    "['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.]*)['\"]\\s*\\.trPlural\\(",
+    "LocaleKeys\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z0-9_]*)*)\\s*\\.tr",
+    "\\btr\\(['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.]+)['\"]",
+    "\\btranslate\\(['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.]+)['\"]"
+  ],
+  "hardcodedStringPatterns": [
+    "Text\\([\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "tooltip:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "hintText:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "labelText:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "title:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "message:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]"
+  ],
+  "hardcodedStringExclusions": [
+    "^https?://",
+    "^assets/",
+    "^packages/",
+    "^[0-9.,]+$",
+    "^\\s*$",
+    "import\\s",
+    "^[a-z_]+$",
+    "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)+"
+  ],
+  "i18nFilePatterns": [
+    "**/assets/lang/**/*.json",
+    "**/assets/translations/**/*.json",
+    "**/assets/locales/**/*.json",
+    "**/assets/i18n/**/*.json",
+    "**/lang/**/*.json",
+    "**/locales/**/*.json"
+  ],
+  "i18nFileFormat": "json",
+  "keyStyle": "nested",
+  "keySeparator": ".",
+  "projectMarkers": [
+    { "file": "pubspec.yaml", "containsAny": ["easy_localization"] }
+  ],
+  "ignorePatterns": [
+    "**/.dart_tool/**",
+    "**/build/**",
+    "**/.git/**",
+    "**/*.g.dart",
+    "**/*.freezed.dart",
+    "**/*_test.dart",
+    "**/test/**"
+  ]
+}

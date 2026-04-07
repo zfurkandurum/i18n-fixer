@@ -18,15 +18,19 @@
     "^[a-z]+(-[a-z]+)*$",
     "^\\s*$",
     "^[0-9.,]+$",
+    "^\\{",
     "className=",
     "data-testid=",
     "import\\s",
     "require\\("
   ],
   "i18nFilePatterns": [
-    "src/locales/**/*.json",
-    "public/locales/**/*.json",
-    "src/i18n/**/*.json"
+    "**/locales/**/*.json",
+    "**/locale/**/*.json",
+    "**/i18n/**/*.json",
+    "**/lang/**/*.json",
+    "**/translations/**/*.json",
+    "**/messages/**/*.json"
   ],
   "i18nFileFormat": "json",
   "keyStyle": "nested",
@@ -35,7 +39,13 @@
     { "file": "package.json", "containsAny": ["react-i18next", "i18next"] }
   ],
   "ignorePatterns": [
-    "**/node_modules/**", "**/dist/**", "**/build/**",
-    "**/.git/**", "**/coverage/**", "**/*.test.*", "**/*.spec.*"
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/.git/**",
+    "**/coverage/**",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/__tests__/**"
   ]
 }

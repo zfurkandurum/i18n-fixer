@@ -18,14 +18,17 @@
     "^[/#.]",
     "^\\s*$",
     "^[0-9.,]+$",
+    "^\\{",
     "style=",
     "import\\s",
     "require\\("
   ],
   "i18nFilePatterns": [
-    "src/locales/**/*.json",
-    "src/i18n/**/*.json",
-    "assets/locales/**/*.json"
+    "**/locales/**/*.json",
+    "**/locale/**/*.json",
+    "**/i18n/**/*.json",
+    "**/lang/**/*.json",
+    "**/translations/**/*.json"
   ],
   "i18nFileFormat": "json",
   "keyStyle": "nested",
@@ -34,7 +37,13 @@
     { "file": "package.json", "containsAny": ["react-native"] }
   ],
   "ignorePatterns": [
-    "**/node_modules/**", "**/android/build/**", "**/ios/Pods/**",
-    "**/.git/**", "**/coverage/**"
+    "**/node_modules/**",
+    "**/android/build/**",
+    "**/ios/Pods/**",
+    "**/.git/**",
+    "**/coverage/**",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/__tests__/**"
   ]
 }
