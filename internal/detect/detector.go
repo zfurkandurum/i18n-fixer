@@ -55,11 +55,19 @@ func matchesMarker(rootDir string, marker types.ProjectMarker) bool {
 		return false
 	}
 
+	content := string(data)
+
+	// Check exclusions first — if any excluded string is present, no match.
+	for _, excl := range marker.NotContainsAny {
+		if strings.Contains(content, excl) {
+			return false
+		}
+	}
+
 	if len(marker.ContainsAny) == 0 {
 		return true
 	}
 
-	content := string(data)
 	for _, keyword := range marker.ContainsAny {
 		if strings.Contains(content, keyword) {
 			return true

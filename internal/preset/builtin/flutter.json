@@ -33,7 +33,11 @@
   "keyStyle": "flat",
   "keySeparator": "_",
   "projectMarkers": [
-    { "file": "pubspec.yaml", "containsAny": ["flutter"] }
+    {
+      "file": "pubspec.yaml",
+      "containsAny": ["flutter_localizations", "intl:"],
+      "notContainsAny": ["easy_localization", "get:", "slang"]
+    }
   ],
   "ignorePatterns": [
     "**/.dart_tool/**",

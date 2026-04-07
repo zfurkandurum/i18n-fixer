@@ -18,8 +18,9 @@ type FrameworkPreset struct {
 
 // ProjectMarker identifies a framework by checking for specific files and content.
 type ProjectMarker struct {
-	File        string   `json:"file"`
-	ContainsAny []string `json:"containsAny,omitempty"`
+	File           string   `json:"file"`
+	ContainsAny    []string `json:"containsAny,omitempty"`
+	NotContainsAny []string `json:"notContainsAny,omitempty"`
 }
 
 // UsedKey represents an i18n key found in source code.
