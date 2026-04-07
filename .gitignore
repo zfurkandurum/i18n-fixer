@@ -30,3 +30,5 @@ vendor/
 
 # npm platform binaries (generated at release time)
 npm/i18n-fixer-*/
+
+.claude

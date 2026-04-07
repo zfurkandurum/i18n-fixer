@@ -1,0 +1,7 @@
+- id: i18n-fixer
+  name: i18n-fixer
+  description: Detect missing keys, unused keys, and hardcoded strings in i18n projects
+  language: system
+  entry: i18n-fixer
+  pass_filenames: false
+  always_run: true

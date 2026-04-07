@@ -1,0 +1,61 @@
+name: 'i18n-fixer'
+description: 'Detect missing keys, unused keys, hardcoded strings, and other i18n issues in your codebase'
+author: 'zfurkandurum'
+
+branding:
+  icon: 'globe'
+  color: 'blue'
+
+inputs:
+  preset:
+    description: 'Framework preset name (e.g. react-i18next, flutter, android-kotlin). Auto-detected if omitted.'
+    required: false
+  format:
+    description: 'Output format: console, json, or prompt'
+    required: false
+    default: 'console'
+  path:
+    description: 'Directory to scan (defaults to repository root)'
+    required: false
+    default: '.'
+  no-hardcoded:
+    description: 'Skip hardcoded string detection'
+    required: false
+    default: 'false'
+  no-missing:
+    description: 'Skip missing key detection'
+    required: false
+    default: 'false'
+  no-unused:
+    description: 'Skip unused key detection'
+    required: false
+    default: 'false'
+  args:
+    description: 'Additional CLI arguments passed verbatim to i18n-fixer'
+    required: false
+    default: ''
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install i18n-fixer
+      shell: bash
+      run: npm install -g i18n-fixer
+
+    - name: Run i18n-fixer
+      shell: bash
+      run: |
+        ARGS="${{ inputs.args }}"
+        if [ -n "${{ inputs.preset }}" ]; then
+          ARGS="$ARGS --preset ${{ inputs.preset }}"
+        fi
+        if [ "${{ inputs.no-hardcoded }}" = "true" ]; then
+          ARGS="$ARGS --no-hardcoded"
+        fi
+        if [ "${{ inputs.no-missing }}" = "true" ]; then
+          ARGS="$ARGS --no-missing"
+        fi
+        if [ "${{ inputs.no-unused }}" = "true" ]; then
+          ARGS="$ARGS --no-unused"
+        fi
+        i18n-fixer --format ${{ inputs.format }} $ARGS ${{ inputs.path }}
