@@ -1,0 +1,47 @@
+{
+  "name": "android-compose",
+  "displayName": "Android (Jetpack Compose)",
+  "fileExtensions": [".kt"],
+  "i18nFunctionPatterns": [
+    "stringResource\\(R\\.string\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)",
+    "pluralStringResource\\(R\\.plurals\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)",
+    "stringArrayResource\\(R\\.array\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)",
+    "context\\.getString\\(R\\.string\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)"
+  ],
+  "hardcodedStringPatterns": [
+    "Text\\([\\s]*\"(?P<str>[A-Z][^\"]{2,})\"",
+    "title[\\s]*=[\\s]*\"(?P<str>[A-Z][^\"]{2,})\"",
+    "label[\\s]*=[\\s]*\"(?P<str>[A-Z][^\"]{2,})\"",
+    "placeholder[\\s]*=[\\s]*\"(?P<str>[A-Z][^\"]{2,})\"",
+    "contentDescription[\\s]*=[\\s]*\"(?P<str>[^\"]{2,})\""
+  ],
+  "hardcodedStringExclusions": [
+    "^https?://",
+    "^@",
+    "^\\s*$",
+    "^[0-9.,]+$",
+    "^[a-z_]+$",
+    "Log\\.",
+    "println\\("
+  ],
+  "i18nFilePatterns": [
+    "**/res/values*/strings.xml",
+    "**/res/values*/plurals.xml"
+  ],
+  "i18nFileFormat": "xml",
+  "keyStyle": "flat",
+  "keySeparator": "_",
+  "projectMarkers": [
+    { "file": "build.gradle.kts", "containsAny": ["compose"] },
+    { "file": "build.gradle", "containsAny": ["compose"] }
+  ],
+  "ignorePatterns": [
+    "**/build/**",
+    "**/.gradle/**",
+    "**/.git/**",
+    "**/*Test.kt",
+    "**/*Tests.kt",
+    "**/test/**",
+    "**/androidTest/**"
+  ]
+}

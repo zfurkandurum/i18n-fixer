@@ -1,0 +1,11 @@
+{
+  "preset": "",
+  "defaultLocale": "en",
+  "ignore": [],
+  "format": "console",
+  "verbose": false,
+  "noHardcoded": false,
+  "noMissing": false,
+  "noUnused": false,
+  "strictUnused": false
+}

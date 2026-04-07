@@ -1,0 +1,51 @@
+{
+  "name": "flutter",
+  "displayName": "Flutter (intl/ARB)",
+  "fileExtensions": [".dart"],
+  "i18nFunctionPatterns": [
+    "AppLocalizations\\.of\\(context\\)\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)",
+    "S\\.of\\(context\\)\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)",
+    "S\\.current\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)",
+    "context\\.l10n\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)"
+  ],
+  "hardcodedStringPatterns": [
+    "Text\\([\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "tooltip:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "hintText:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "labelText:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "title:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]"
+  ],
+  "hardcodedStringExclusions": [
+    "^https?://",
+    "^assets/",
+    "^packages/",
+    "^[0-9.,]+$",
+    "^\\s*$",
+    "import\\s",
+    "^[a-z_]+$"
+  ],
+  "i18nFilePatterns": [
+    "lib/l10n/**/*.arb",
+    "lib/l10n/*.arb",
+    "assets/l10n/**/*.arb"
+  ],
+  "i18nFileFormat": "arb",
+  "keyStyle": "flat",
+  "keySeparator": "_",
+  "projectMarkers": [
+    {
+      "file": "pubspec.yaml",
+      "containsAny": ["flutter_localizations", "intl:"],
+      "notContainsAny": ["easy_localization", "get:", "slang"]
+    }
+  ],
+  "ignorePatterns": [
+    "**/.dart_tool/**",
+    "**/build/**",
+    "**/.git/**",
+    "**/*.g.dart",
+    "**/*.freezed.dart",
+    "**/*_test.dart",
+    "**/test/**"
+  ]
+}

@@ -1,0 +1,92 @@
+name: Publish npm
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Get latest release tag
+        id: tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            TAG="${GITHUB_REF#refs/tags/}"
+          else
+            TAG=$(gh release view --json tagName -q .tagName)
+          fi
+          VERSION="${TAG#v}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Using tag: $TAG, version: $VERSION"
+
+      - name: Download release binaries
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ steps.tag.outputs.tag }}"
+          VERSION="${{ steps.tag.outputs.version }}"
+
+          PLATFORMS=(
+            "darwin_arm64"
+            "darwin_amd64"
+            "linux_amd64"
+            "linux_arm64"
+            "windows_amd64"
+            "windows_arm64"
+          )
+
+          for platform in "${PLATFORMS[@]}"; do
+            if [[ "$platform" == windows_* ]]; then
+              ARCHIVE="i18n-fixer_${VERSION}_${platform}.zip"
+            else
+              ARCHIVE="i18n-fixer_${VERSION}_${platform}.tar.gz"
+            fi
+            echo "Downloading $ARCHIVE..."
+            DEST="dist/i18n-fixer_${platform}"
+            mkdir -p "$DEST"
+            if gh release download "$TAG" -p "$ARCHIVE" -D /tmp/ 2>/dev/null; then
+              if [[ "$platform" == windows_* ]]; then
+                unzip -o "/tmp/$ARCHIVE" -d "$DEST/" && rm "/tmp/$ARCHIVE"
+              else
+                tar xzf "/tmp/$ARCHIVE" -C "$DEST/" && rm "/tmp/$ARCHIVE"
+              fi
+              echo "  Extracted to $DEST"
+            else
+              echo "  Warning: $ARCHIVE not found, skipping"
+            fi
+          done
+
+          ls -la dist/
+
+      - name: Prepare npm packages
+        run: |
+          VERSION="${{ steps.tag.outputs.version }}"
+          bash scripts/prepare-npm.sh "$VERSION" dist
+
+      - name: Publish platform packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          for dir in npm/i18n-fixer-*/; do
+            if [ -d "$dir" ]; then
+              echo "Publishing $dir..."
+              cd "$dir" && npm publish --access public && cd ../..
+            fi
+          done
+
+      - name: Publish main package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: cd npm/i18n-fixer && npm publish --access public

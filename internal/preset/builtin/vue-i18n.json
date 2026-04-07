@@ -1,0 +1,54 @@
+{
+  "name": "vue-i18n",
+  "displayName": "Vue (vue-i18n)",
+  "fileExtensions": [".vue", ".ts", ".js"],
+  "i18nFunctionPatterns": [
+    "\\$t\\(['\"](?P<key>[^'\"]+)['\"]",
+    "\\bt\\(['\"](?P<key>[^'\"]+)['\"]",
+    "\\$tc\\(['\"](?P<key>[^'\"]+)['\"]",
+    "v-t=\"['\"](?P<key>[^'\"]+)['\"]",
+    "i18n\\.t\\(['\"](?P<key>[^'\"]+)['\"]"
+  ],
+  "hardcodedStringPatterns": [
+    ">[\\s]*(?P<str>[A-Z][a-zA-Z0-9 ,.!?'\\-]{2,})[\\s]*<",
+    "(?:placeholder|title|alt|aria-label|label)=\"(?P<str>[^\"]{2,})\""
+  ],
+  "hardcodedStringExclusions": [
+    "^https?://",
+    "^[/#.]",
+    "^\\s*$",
+    "^[0-9.,]+$",
+    "^\\{\\{",
+    "\\$t\\(",
+    "class=\"",
+    "import\\s",
+    "require\\("
+  ],
+  "i18nFilePatterns": [
+    "**/locales/**/*.json",
+    "**/locale/**/*.json",
+    "**/i18n/**/*.json",
+    "**/lang/**/*.json",
+    "**/translations/**/*.json",
+    "**/locales/**/*.yaml",
+    "**/locales/**/*.yml",
+    "**/i18n/**/*.yaml",
+    "**/i18n/**/*.yml",
+    "**/lang/**/*.yaml",
+    "**/lang/**/*.yml"
+  ],
+  "i18nFileFormat": "json",
+  "keyStyle": "nested",
+  "keySeparator": ".",
+  "projectMarkers": [
+    { "file": "package.json", "containsAny": ["vue-i18n"] }
+  ],
+  "ignorePatterns": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/.git/**",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/__tests__/**"
+  ]
+}

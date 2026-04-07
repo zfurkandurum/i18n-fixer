@@ -1,0 +1,48 @@
+{
+  "name": "nuxt-i18n",
+  "displayName": "Nuxt.js (@nuxtjs/i18n)",
+  "fileExtensions": [".vue", ".ts", ".js"],
+  "i18nFunctionPatterns": [
+    "\\$t\\(['\"](?P<key>[^'\"]+)['\"]",
+    "\\bt\\(['\"](?P<key>[^'\"]+)['\"]",
+    "\\$tc\\(['\"](?P<key>[^'\"]+)['\"]"
+  ],
+  "hardcodedStringPatterns": [
+    ">[\\s]*(?P<str>[A-Z][a-zA-Z0-9 ,.!?'\\-]{2,})[\\s]*<",
+    "(?:placeholder|title|alt|aria-label|label)=\"(?P<str>[^\"]{2,})\""
+  ],
+  "hardcodedStringExclusions": [
+    "^https?://",
+    "^[/#.]",
+    "^\\s*$",
+    "^[0-9.,]+$",
+    "^\\{\\{",
+    "\\$t\\(",
+    "class=\"",
+    "import\\s"
+  ],
+  "i18nFilePatterns": [
+    "**/locales/**/*.json",
+    "**/locale/**/*.json",
+    "**/i18n/**/*.json",
+    "**/lang/**/*.json",
+    "**/translations/**/*.json",
+    "**/locales/**/*.yaml",
+    "**/locales/**/*.yml"
+  ],
+  "i18nFileFormat": "json",
+  "keyStyle": "nested",
+  "keySeparator": ".",
+  "projectMarkers": [
+    { "file": "package.json", "containsAny": ["@nuxtjs/i18n"] }
+  ],
+  "ignorePatterns": [
+    "**/node_modules/**",
+    "**/.nuxt/**",
+    "**/.output/**",
+    "**/.git/**",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/__tests__/**"
+  ]
+}

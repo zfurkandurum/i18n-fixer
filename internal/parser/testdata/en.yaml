@@ -1,0 +1,5 @@
+common:
+  save: Save
+  cancel: Cancel
+errors:
+  required: This field is required

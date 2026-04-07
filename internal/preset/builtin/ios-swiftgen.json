@@ -1,0 +1,43 @@
+{
+  "name": "ios-swiftgen",
+  "displayName": "iOS (SwiftGen L10n)",
+  "fileExtensions": [".swift"],
+  "i18nFunctionPatterns": [
+    "L10n\\.(?P<key>[A-Z][a-zA-Z0-9]*(?:\\.[A-Z][a-zA-Z0-9]*)+)",
+    "Strings\\.(?P<key>[A-Z][a-zA-Z0-9]*(?:\\.[A-Z][a-zA-Z0-9]*)+)"
+  ],
+  "hardcodedStringPatterns": [
+    "Text\\(['\"](?P<str>[A-Z][^'\"]{2,})['\"]\\)",
+    "\\.text[\\s]*=[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "title:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "message:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]"
+  ],
+  "hardcodedStringExclusions": [
+    "^https?://",
+    "^#[0-9a-fA-F]+$",
+    "^\\s*$",
+    "^[0-9.,]+$",
+    "import\\s",
+    "^[a-z]"
+  ],
+  "i18nFilePatterns": [
+    "**/*.lproj/Localizable.strings",
+    "**/*.lproj/*.strings"
+  ],
+  "i18nFileFormat": "strings",
+  "keyStyle": "flat",
+  "keySeparator": ".",
+  "projectMarkers": [
+    { "file": "Podfile", "containsAny": ["SwiftGen"] },
+    { "file": ".swiftgen.yml" }
+  ],
+  "ignorePatterns": [
+    "**/Pods/**",
+    "**/DerivedData/**",
+    "**/.build/**",
+    "**/.git/**",
+    "**/*Tests.swift",
+    "**/*Test.swift",
+    "**/Tests/**"
+  ]
+}

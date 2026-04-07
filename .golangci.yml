@@ -1,0 +1,22 @@
+version: "2"
+
+linters:
+  enable:
+    - errcheck
+    - govet
+    - staticcheck
+    - unused
+    - gosimple
+    - ineffassign
+    - misspell
+    - gofmt
+
+issues:
+  exclude-dirs:
+    - vendor
+    - dist
+    - bin
+
+output:
+  formats:
+    - format: colored-line-number

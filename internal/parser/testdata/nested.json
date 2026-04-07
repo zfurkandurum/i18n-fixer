@@ -1,0 +1,11 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "errors": {
+    "network": {
+      "timeout": "Connection timed out"
+    }
+  }
+}

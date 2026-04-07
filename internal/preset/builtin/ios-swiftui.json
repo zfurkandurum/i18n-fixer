@@ -1,0 +1,45 @@
+{
+  "name": "ios-swiftui",
+  "displayName": "iOS (SwiftUI)",
+  "fileExtensions": [".swift"],
+  "i18nFunctionPatterns": [
+    "Text\\(['\"](?P<key>[^'\"]+)['\"][\\s]*,[\\s]*bundle:",
+    "String\\(localized:[\\s]*['\"](?P<key>[^'\"]+)['\"]",
+    "NSLocalizedString\\(['\"](?P<key>[^'\"]+)['\"]",
+    "LocalizedStringKey\\(['\"](?P<key>[^'\"]+)['\"]"
+  ],
+  "hardcodedStringPatterns": [
+    "Text\\(['\"](?P<str>[A-Z][^'\"]{2,})['\"]\\)",
+    "Label\\(['\"](?P<str>[^'\"]{2,})['\"]",
+    "Button\\(['\"](?P<str>[^'\"]{2,})['\"]",
+    "\\.navigationTitle\\(['\"](?P<str>[^'\"]{2,})['\"]"
+  ],
+  "hardcodedStringExclusions": [
+    "^https?://",
+    "^#[0-9a-fA-F]+$",
+    "^\\s*$",
+    "^[0-9.,]+$",
+    "import\\s",
+    "^[a-z_]"
+  ],
+  "i18nFilePatterns": [
+    "**/*.lproj/Localizable.strings",
+    "**/Localizable.xcstrings"
+  ],
+  "i18nFileFormat": "strings",
+  "keyStyle": "flat",
+  "keySeparator": ".",
+  "projectMarkers": [
+    { "file": "Package.swift", "containsAny": ["SwiftUI"] },
+    { "file": "*.xcodeproj/project.pbxproj" }
+  ],
+  "ignorePatterns": [
+    "**/Pods/**",
+    "**/DerivedData/**",
+    "**/.build/**",
+    "**/.git/**",
+    "**/*Tests.swift",
+    "**/*Test.swift",
+    "**/Tests/**"
+  ]
+}
