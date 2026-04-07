@@ -6,6 +6,7 @@ set -euo pipefail
 
 VERSION="${1:?Usage: prepare-npm.sh <version>}"
 DIST_DIR="${2:-dist}"
+SCOPE="@zfurkandurum"
 
 PLATFORMS=(
   "darwin-arm64:darwin_arm64"
@@ -19,8 +20,8 @@ PLATFORMS=(
 for entry in "${PLATFORMS[@]}"; do
   NPM_PLATFORM="${entry%%:*}"
   GO_PLATFORM="${entry##*:}"
-  PKG_NAME="i18n-fixer-${NPM_PLATFORM}"
-  PKG_DIR="npm/${PKG_NAME}"
+  PKG_NAME="${SCOPE}/i18n-fixer-${NPM_PLATFORM}"
+  PKG_DIR="npm/i18n-fixer-${NPM_PLATFORM}"
 
   echo "Preparing ${PKG_NAME}..."
 
@@ -45,8 +46,6 @@ for entry in "${PLATFORMS[@]}"; do
   # Determine OS and CPU for package.json
   OS="${NPM_PLATFORM%%-*}"
   CPU="${NPM_PLATFORM##*-}"
-  if [ "${CPU}" = "x64" ]; then CPU_JSON="x64"; fi
-  if [ "${CPU}" = "arm64" ]; then CPU_JSON="arm64"; fi
 
   # Create package.json
   cat > "${PKG_DIR}/package.json" << PKGJSON
@@ -71,14 +70,14 @@ PKGJSON
 done
 
 # Update version in main package
-sed -i.bak "s/\"version\": \".*\"/\"version\": \"${VERSION}\"/" npm/i18n-fixer/package.json
+sed -i.bak "s/\"version\": \"[^\"]*\"/\"version\": \"${VERSION}\"/" npm/i18n-fixer/package.json
 rm -f npm/i18n-fixer/package.json.bak
 
-# Update optional dependency versions
+# Update optional dependency versions (use | as delimiter to handle @ and / in scoped names)
 for entry in "${PLATFORMS[@]}"; do
   NPM_PLATFORM="${entry%%:*}"
-  PKG_NAME="i18n-fixer-${NPM_PLATFORM}"
-  sed -i.bak "s/\"${PKG_NAME}\": \".*\"/\"${PKG_NAME}\": \"${VERSION}\"/" npm/i18n-fixer/package.json
+  PKG_NAME="${SCOPE}/i18n-fixer-${NPM_PLATFORM}"
+  sed -i.bak "s|\"${PKG_NAME}\": \"[^\"]*\"|\"${PKG_NAME}\": \"${VERSION}\"|" npm/i18n-fixer/package.json
   rm -f npm/i18n-fixer/package.json.bak
 done
 
