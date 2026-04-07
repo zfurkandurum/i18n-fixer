@@ -33,9 +33,11 @@ for entry in "${PLATFORMS[@]}"; do
   fi
 
   # Copy binary from GoReleaser output
-  SRC="${DIST_DIR}/i18n-fixer_${GO_PLATFORM}/${BIN_NAME}"
-  if [ ! -f "${SRC}" ]; then
-    echo "  Warning: ${SRC} not found, skipping"
+  # GoReleaser archives extract to versioned dirs (e.g. i18n-fixer_0.3.3_darwin_arm64)
+  # so search for the binary anywhere under DIST_DIR matching the platform
+  SRC=$(find "${DIST_DIR}" -name "${BIN_NAME}" -path "*${GO_PLATFORM}*" 2>/dev/null | head -1)
+  if [ -z "${SRC}" ]; then
+    echo "  Warning: binary for ${GO_PLATFORM} not found in ${DIST_DIR}, skipping"
     continue
   fi
 
