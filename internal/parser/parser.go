@@ -27,6 +27,8 @@ func Parse(filePath, format, keySeparator string) ([]types.I18nEntry, error) {
 		entries, err = ParseStrings(filePath)
 	case "arb":
 		entries, err = ParseARB(filePath)
+	case "xcstrings":
+		entries, err = ParseXCStrings(filePath)
 	default:
 		return nil, fmt.Errorf("unsupported i18n file format: %s", format)
 	}

@@ -116,27 +116,46 @@ func runAudit(cmd *cobra.Command, args []string) error {
 			fmt.Fprintf(os.Stderr, "Scanning with preset: %s\n", p.DisplayName)
 		}
 
-		// Scan source files
+		// Merge any extra patterns from .i18n-fixer.json into the preset
+		if len(cfg.I18nFunctionPatterns) > 0 {
+			p.I18nFunctionPatterns = append(p.I18nFunctionPatterns, cfg.I18nFunctionPatterns...)
+		}
+
+		// Parse i18n files FIRST — needed for literal key search
+		i18nEntries, i18nFileCount, i18nFilePaths, err := parseI18nFiles(rootDir, p)
+		if err != nil {
+			return fmt.Errorf("parsing i18n files: %w", err)
+		}
+
+		// Scan source files with regex patterns
 		scanResult, err := scanner.Scan(rootDir, p)
 		if err != nil {
 			return fmt.Errorf("scanning source files: %w", err)
 		}
 
-		// Parse i18n files
-		i18nEntries, i18nFileCount, err := parseI18nFiles(rootDir, p)
-		if err != nil {
-			return fmt.Errorf("parsing i18n files: %w", err)
+		// Literal search: find any key that appears as a literal string in source,
+		// regardless of the surrounding function/syntax. Catches patterns that no
+		// regex preset could anticipate (custom wrappers, object properties, etc.)
+		if !noUnused && !cfg.NoUnused {
+			patternFound := make(map[string]bool, len(scanResult.UsedKeys))
+			for _, uk := range scanResult.UsedKeys {
+				patternFound[uk.Key] = true
+			}
+			allKeys := extractUniqueKeys(i18nEntries)
+			literalHits := scanner.ScanKeyLiterals(rootDir, p, allKeys, i18nFilePaths, patternFound)
+			scanResult.UsedKeys = append(scanResult.UsedKeys, literalHits...)
 		}
 
 		// Analyze
 		result := analyzer.Analyze(scanResult, i18nEntries, p.KeySeparator, analyzer.Options{
-			NoMissing:           noMissing || cfg.NoMissing,
-			NoUnused:            noUnused || cfg.NoUnused,
-			NoHardcoded:         noHardcoded || cfg.NoHardcoded,
-			NoDuplicates:        noDuplicates,
-			NoNaming:            noNaming,
-			NoCompleteness:      noCompleteness,
-			KeyNamingConvention: keyConvention,
+			NoMissing:               noMissing || cfg.NoMissing,
+			NoUnused:                noUnused || cfg.NoUnused,
+			NoHardcoded:             noHardcoded || cfg.NoHardcoded,
+			NoDuplicates:            noDuplicates,
+			NoNaming:                noNaming,
+			NoCompleteness:          noCompleteness,
+			KeyNamingConvention:     keyConvention,
+			UnusedKeyIgnorePatterns: cfg.UnusedKeyIgnorePatterns,
 		})
 
 		result.Summary.FilesScanned = countSourceFiles(rootDir, p)
@@ -194,9 +213,28 @@ func runAudit(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-func parseI18nFiles(rootDir string, p types.FrameworkPreset) ([]types.I18nEntry, int, error) {
+// i18nSkipDirs are directories never expected to contain project translation files.
+var i18nSkipDirs = []string{
+	"/node_modules/", "/dist/", "/build/", "/.git/", "/vendor/",
+	"/__pycache__/", "/DerivedData/", "/Pods/", "/.gradle/",
+	"/.next/", "/.nuxt/", "/.angular/", "/.svelte-kit/", "/.dart_tool/",
+	"/coverage/", "/.build/",
+}
+
+func isI18nPathExcluded(path string) bool {
+	normalized := filepath.ToSlash(path)
+	for _, dir := range i18nSkipDirs {
+		if strings.Contains(normalized, dir) {
+			return true
+		}
+	}
+	return false
+}
+
+func parseI18nFiles(rootDir string, p types.FrameworkPreset) ([]types.I18nEntry, int, map[string]bool, error) {
 	var allEntries []types.I18nEntry
 	fileCount := 0
+	seen := make(map[string]bool)
 
 	for _, pattern := range p.I18nFilePatterns {
 		fullPattern := filepath.Join(rootDir, pattern)
@@ -206,7 +244,21 @@ func parseI18nFiles(rootDir string, p types.FrameworkPreset) ([]types.I18nEntry,
 		}
 
 		for _, match := range matches {
-			entries, err := parser.Parse(match, p.I18nFileFormat, p.KeySeparator)
+			// Skip paths inside non-project directories
+			if isI18nPathExcluded(match) {
+				continue
+			}
+			// Deduplicate: a file could match multiple patterns
+			if seen[match] {
+				continue
+			}
+			seen[match] = true
+
+			format := p.I18nFileFormat
+			if strings.HasSuffix(match, ".xcstrings") {
+				format = "xcstrings"
+			}
+			entries, err := parser.Parse(match, format, p.KeySeparator)
 			if err != nil {
 				continue
 			}
@@ -215,7 +267,20 @@ func parseI18nFiles(rootDir string, p types.FrameworkPreset) ([]types.I18nEntry,
 		}
 	}
 
-	return allEntries, fileCount, nil
+	return allEntries, fileCount, seen, nil
+}
+
+// extractUniqueKeys returns deduplicated key strings from i18n entries.
+func extractUniqueKeys(entries []types.I18nEntry) []string {
+	seen := make(map[string]bool, len(entries))
+	keys := make([]string, 0, len(entries))
+	for _, e := range entries {
+		if !seen[e.Key] {
+			seen[e.Key] = true
+			keys = append(keys, e.Key)
+		}
+	}
+	return keys
 }
 
 func countSourceFiles(rootDir string, p types.FrameworkPreset) int {

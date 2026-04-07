@@ -4,9 +4,9 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"strings"
 	"sync"
 
+	"github.com/bmatcuk/doublestar/v4"
 	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
@@ -64,6 +64,26 @@ func Scan(rootDir string, preset types.FrameworkPreset) (*ScanResult, error) {
 	return result, nil
 }
 
+// hardcodedSkipDirs lists directories that are always skipped during source scanning.
+var hardcodedSkipDirs = map[string]bool{
+	"node_modules": true,
+	".git":         true,
+	"dist":         true,
+	"build":        true,
+	".dart_tool":   true,
+	"Pods":         true,
+	"DerivedData":  true,
+	".gradle":      true,
+	".next":        true,
+	".nuxt":        true,
+	".svelte-kit":  true,
+	".angular":     true,
+	"vendor":       true,
+	"__pycache__":  true,
+	".build":       true,
+	"coverage":     true,
+}
+
 func findSourceFiles(rootDir string, extensions, ignorePatterns []string) ([]string, error) {
 	extSet := make(map[string]bool)
 	for _, ext := range extensions {
@@ -77,20 +97,14 @@ func findSourceFiles(rootDir string, extensions, ignorePatterns []string) ([]str
 		}
 
 		if info.IsDir() {
-			name := info.Name()
-			// Quick skip for common directories
-			if name == "node_modules" || name == ".git" || name == "dist" ||
-				name == "build" || name == ".dart_tool" || name == "Pods" ||
-				name == "DerivedData" || name == ".gradle" || name == ".next" ||
-				name == ".nuxt" || name == ".svelte-kit" || name == ".angular" {
+			if hardcodedSkipDirs[info.Name()] {
 				return filepath.SkipDir
 			}
 			return nil
 		}
 
 		// Check extension
-		ext := filepath.Ext(path)
-		if !extSet[ext] {
+		if !extSet[filepath.Ext(path)] {
 			return nil
 		}
 
@@ -99,23 +113,14 @@ func findSourceFiles(rootDir string, extensions, ignorePatterns []string) ([]str
 			return nil
 		}
 
-		// Check ignore patterns
+		// Check ignore patterns using doublestar for proper ** glob support
 		relPath, _ := filepath.Rel(rootDir, path)
+		// Normalize to forward slashes for doublestar
+		relPath = filepath.ToSlash(relPath)
 		for _, pattern := range ignorePatterns {
-			if matched, _ := filepath.Match(pattern, relPath); matched {
+			pattern = filepath.ToSlash(pattern)
+			if matched, _ := doublestar.Match(pattern, relPath); matched {
 				return nil
-			}
-			// Also check against just the filename for simple patterns
-			if matched, _ := filepath.Match(pattern, info.Name()); matched {
-				return nil
-			}
-			// Check if path contains the ignore pattern directory
-			if strings.Contains(pattern, "**") {
-				cleanPattern := strings.ReplaceAll(pattern, "**", "")
-				cleanPattern = strings.Trim(cleanPattern, "/")
-				if cleanPattern != "" && strings.Contains(relPath, cleanPattern) {
-					return nil
-				}
 			}
 		}
 

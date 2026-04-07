@@ -12,6 +12,12 @@ func TestAllPresetsLoaded(t *testing.T) {
 		"angular", "ngx-translate", "svelte-i18n",
 		"next-intl", "nuxt-i18n", "ember-intl",
 		"flutter", "ios-swift", "android-kotlin", "react-native",
+		"next-i18next", "i18next", "lingui", "next-translate", "typesafe-i18n", "inlang-paraglide",
+		"flutter-easy-localization", "flutter-getx", "flutter-slang",
+		"android-compose",
+		"ios-swiftui", "ios-swiftgen", "ios-xcstrings",
+		"react-native-i18n-js",
+		"django", "rails-erb", "laravel-blade", "go-i18n",
 	}
 
 	for _, name := range expectedPresets {
@@ -74,7 +80,7 @@ func TestPresetFieldsValid(t *testing.T) {
 			if p.I18nFileFormat == "" {
 				t.Error("i18nFileFormat should not be empty")
 			}
-			validFormats := map[string]bool{"json": true, "yaml": true, "xml": true, "strings": true, "arb": true}
+			validFormats := map[string]bool{"json": true, "yaml": true, "xml": true, "strings": true, "arb": true, "xcstrings": true}
 			if !validFormats[p.I18nFileFormat] {
 				t.Errorf("invalid i18nFileFormat: %s", p.I18nFileFormat)
 			}

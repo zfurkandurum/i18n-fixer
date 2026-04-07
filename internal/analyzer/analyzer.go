@@ -21,7 +21,7 @@ func Analyze(scanResult *scanner.ScanResult, i18nEntries []types.I18nEntry, keyS
 	}
 
 	if !opts.NoUnused {
-		unusedKeys = FindUnusedKeys(scanResult.UsedKeys, i18nEntries)
+		unusedKeys = FindUnusedKeys(scanResult.UsedKeys, i18nEntries, opts.UnusedKeyIgnorePatterns)
 	}
 
 	if !opts.NoHardcoded {
@@ -69,13 +69,14 @@ func Analyze(scanResult *scanner.ScanResult, i18nEntries []types.I18nEntry, keyS
 
 // Options controls which analyzers to run.
 type Options struct {
-	NoMissing           bool
-	NoUnused            bool
-	NoHardcoded         bool
-	NoCompleteness      bool
-	NoDuplicates        bool
-	NoNaming            bool
-	KeyNamingConvention string
+	NoMissing               bool
+	NoUnused                bool
+	NoHardcoded             bool
+	NoCompleteness          bool
+	NoDuplicates            bool
+	NoNaming                bool
+	KeyNamingConvention     string
+	UnusedKeyIgnorePatterns []string
 }
 
 func extractLocales(entries []types.I18nEntry) []string {

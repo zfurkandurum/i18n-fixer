@@ -27,6 +27,11 @@ func ScanHardcoded(filePath string, patterns []*regexp.Regexp, exclusions []*reg
 		lineNum++
 		line := scanner.Text()
 
+		// Skip lines annotated with i18n-ignore
+		if strings.Contains(line, "i18n-ignore") {
+			continue
+		}
+
 		for _, pattern := range patterns {
 			matches := pattern.FindAllStringSubmatchIndex(line, -1)
 			for _, match := range matches {
