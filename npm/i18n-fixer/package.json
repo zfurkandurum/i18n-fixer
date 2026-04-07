@@ -1,17 +1,17 @@
 {
   "name": "i18n-fixer",
-  "version": "0.2.1",
+  "version": "0.3.2",
   "description": "Framework-agnostic CLI to find hardcoded strings, missing & unused i18n keys. Generates AI-ready fix prompts.",
   "bin": {
     "i18n-fixer": "bin/i18n-fixer"
   },
   "optionalDependencies": {
-    "i18n-fixer-darwin-arm64": "0.1.0",
-    "i18n-fixer-darwin-x64": "0.1.0",
-    "i18n-fixer-linux-x64": "0.1.0",
-    "i18n-fixer-linux-arm64": "0.1.0",
-    "i18n-fixer-win32-x64": "0.1.0",
-    "i18n-fixer-win32-arm64": "0.1.0"
+    "i18n-fixer-darwin-arm64": "0.3.2",
+    "i18n-fixer-darwin-x64": "0.3.2",
+    "i18n-fixer-linux-x64": "0.3.2",
+    "i18n-fixer-linux-arm64": "0.3.2",
+    "i18n-fixer-win32-x64": "0.3.2",
+    "i18n-fixer-win32-arm64": "0.3.2"
   },
   "keywords": [
     "i18n",
