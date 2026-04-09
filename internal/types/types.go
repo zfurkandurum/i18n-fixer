@@ -6,6 +6,11 @@ type FrameworkPreset struct {
 	DisplayName               string          `json:"displayName"`
 	FileExtensions            []string        `json:"fileExtensions"`
 	I18nFunctionPatterns      []string        `json:"i18nFunctionPatterns"`
+	// DynamicPrefixPatterns are regex patterns (with a named "prefix" group) that
+	// detect dynamic key constructions like 'SECTION.' + variable | translate.
+	// Any key in the i18n files whose string prefix matches a found prefix is
+	// excluded from the unused-key report and logged as a dynamic key.
+	DynamicPrefixPatterns     []string        `json:"dynamicPrefixPatterns"`
 	HardcodedStringPatterns   []string        `json:"hardcodedStringPatterns"`
 	HardcodedStringExclusions []string        `json:"hardcodedStringExclusions"`
 	I18nFilePatterns          []string        `json:"i18nFilePatterns"`

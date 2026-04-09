@@ -87,6 +87,17 @@ func shouldExclude(str string, exclusions []*regexp.Regexp) bool {
 		return true
 	}
 
+	// Dart/JS string interpolation: ${expr} or $variable
+	if strings.Contains(str, "${") {
+		return true
+	}
+	if idx := strings.Index(str, "$"); idx >= 0 {
+		rest := []rune(str[idx+1:])
+		if len(rest) > 0 && unicode.IsLetter(rest[0]) {
+			return true
+		}
+	}
+
 	// Check user-defined exclusion patterns
 	for _, ex := range exclusions {
 		if ex.MatchString(str) {

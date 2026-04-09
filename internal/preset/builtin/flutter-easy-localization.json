@@ -3,12 +3,12 @@
   "displayName": "Flutter (easy_localization)",
   "fileExtensions": [".dart"],
   "i18nFunctionPatterns": [
-    "['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.]*)['\"]\\s*\\.tr\\(\\)",
-    "['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.]*)['\"]\\s*\\.plural\\(",
-    "['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.]*)['\"]\\s*\\.trPlural\\(",
+    "['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.$]*)['\"]\\s*\\.tr\\(",
+    "['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.$]*)['\"]\\s*\\.plural\\(",
+    "['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.$]*)['\"]\\s*\\.trPlural\\(",
     "LocaleKeys\\.(?P<key>[a-zA-Z_][a-zA-Z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z0-9_]*)*)\\s*\\.tr",
-    "\\btr\\(['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.]+)['\"]",
-    "\\btranslate\\(['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.]+)['\"]"
+    "\\btr\\(['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.$]+)['\"]",
+    "\\btranslate\\(['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.$]+)['\"]"
   ],
   "hardcodedStringPatterns": [
     "Text\\([\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
@@ -26,7 +26,7 @@
     "^\\s*$",
     "import\\s",
     "^[a-z_]+$",
-    "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)+"
+    "^[a-zA-Z_][a-zA-Z0-9_]*(\\.[a-zA-Z0-9_]+)+"
   ],
   "i18nFilePatterns": [
     "**/assets/lang/**/*.json",

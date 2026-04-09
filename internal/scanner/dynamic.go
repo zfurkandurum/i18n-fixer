@@ -10,6 +10,11 @@ func IsDynamicKey(key string) bool {
 		return true
 	}
 
+	// Dart string interpolation: $variable (without braces)
+	if strings.Contains(key, "$") {
+		return true
+	}
+
 	// String concatenation indicator
 	if strings.Contains(key, "+") {
 		return true

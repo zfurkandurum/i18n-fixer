@@ -7,8 +7,11 @@ import (
 )
 
 // FindUnusedKeys finds keys in translation files that are never used in code.
-// ignorePatterns supports "PREFIX.*" (prefix), "*.SUFFIX" (suffix), or exact key names.
-func FindUnusedKeys(usedKeys []types.UsedKey, i18nEntries []types.I18nEntry, ignorePatterns []string) []types.UnusedKeyIssue {
+// ignorePatterns supports "PREFIX.*" (dot-separated prefix), "PREFIX_*" (raw string prefix),
+// "*.SUFFIX" (suffix), or exact key names.
+// dynamicPrefixes holds raw string prefixes detected from dynamic key patterns
+// (e.g. "SEASON.TIP_" from 'SEASON.TIP_' + variable | translate).
+func FindUnusedKeys(usedKeys []types.UsedKey, i18nEntries []types.I18nEntry, ignorePatterns []string, dynamicPrefixes []string) []types.UnusedKeyIssue {
 	usedKeySet := make(map[string]bool)
 	for _, uk := range usedKeys {
 		usedKeySet[uk.Key] = true
@@ -26,7 +29,7 @@ func FindUnusedKeys(usedKeys []types.UsedKey, i18nEntries []types.I18nEntry, ign
 	var issues []types.UnusedKeyIssue
 
 	for key, locations := range entryLocations {
-		if !usedKeySet[key] && !keyMatchesAnyPattern(key, ignorePatterns) {
+		if !usedKeySet[key] && !keyMatchesAnyPattern(key, ignorePatterns) && !keyHasDynamicPrefix(key, dynamicPrefixes) {
 			issues = append(issues, types.UnusedKeyIssue{
 				Key:       key,
 				DefinedIn: locations,
@@ -35,6 +38,29 @@ func FindUnusedKeys(usedKeys []types.UsedKey, i18nEntries []types.I18nEntry, ign
 	}
 
 	return issues
+}
+
+// keyHasDynamicPrefix returns true if the key starts with any of the dynamic prefixes.
+func keyHasDynamicPrefix(key string, prefixes []string) bool {
+	for _, p := range prefixes {
+		if p != "" && strings.HasPrefix(key, p) {
+			return true
+		}
+	}
+	return false
+}
+
+// dedupPrefixes removes duplicate entries from a slice of prefixes.
+func dedupPrefixes(prefixes []string) []string {
+	seen := make(map[string]bool, len(prefixes))
+	result := prefixes[:0]
+	for _, p := range prefixes {
+		if !seen[p] {
+			seen[p] = true
+			result = append(result, p)
+		}
+	}
+	return result
 }
 
 // keyMatchesAnyPattern returns true if key matches any of the ignore patterns.
@@ -58,6 +84,11 @@ func keyMatchesPattern(key, pattern string) bool {
 	if strings.HasSuffix(pattern, ".*") {
 		prefix := strings.TrimSuffix(pattern, ".*")
 		return key == prefix || strings.HasPrefix(key, prefix+".")
+	}
+	// Raw string prefix: "SEASON.TIP_*" matches any key starting with "SEASON.TIP_"
+	if strings.HasSuffix(pattern, "*") && !strings.HasSuffix(pattern, ".*") {
+		prefix := strings.TrimSuffix(pattern, "*")
+		return strings.HasPrefix(key, prefix)
 	}
 	if strings.HasPrefix(pattern, "*.") {
 		suffix := strings.TrimPrefix(pattern, "*.")

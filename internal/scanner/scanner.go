@@ -12,9 +12,13 @@ import (
 
 // ScanResult holds all findings from scanning source files.
 type ScanResult struct {
-	UsedKeys    []types.UsedKey
-	DynamicKeys []types.DynamicKeyWarning
-	Hardcoded   []types.HardcodedString
+	UsedKeys       []types.UsedKey
+	DynamicKeys    []types.DynamicKeyWarning
+	Hardcoded      []types.HardcodedString
+	// DynamicPrefixes holds key prefixes detected via dynamicPrefixPatterns
+	// (e.g. "SEASON.TIP_", "ONBOARDING."). All i18n keys that start with one
+	// of these prefixes should be excluded from the unused-key report.
+	DynamicPrefixes []string
 }
 
 // Scan orchestrates parallel scanning of source files.
@@ -25,6 +29,7 @@ func Scan(rootDir string, preset types.FrameworkPreset) (*ScanResult, error) {
 	}
 
 	keyPatterns := CompilePatterns(preset.I18nFunctionPatterns)
+	prefixPatterns := CompilePatterns(preset.DynamicPrefixPatterns)
 	hardcodedPatterns := CompilePatterns(preset.HardcodedStringPatterns)
 	exclusionPatterns := CompilePatterns(preset.HardcodedStringExclusions)
 
@@ -50,11 +55,13 @@ func Scan(rootDir string, preset types.FrameworkPreset) (*ScanResult, error) {
 			for filePath := range fileCh {
 				keys, dynWarnings := ScanKeyUsage(filePath, keyPatterns)
 				hardcoded := ScanHardcoded(filePath, hardcodedPatterns, exclusionPatterns)
+				prefixes := ScanDynamicPrefixes(filePath, prefixPatterns)
 
 				mu.Lock()
 				result.UsedKeys = append(result.UsedKeys, keys...)
 				result.DynamicKeys = append(result.DynamicKeys, dynWarnings...)
 				result.Hardcoded = append(result.Hardcoded, hardcoded...)
+				result.DynamicPrefixes = append(result.DynamicPrefixes, prefixes...)
 				mu.Unlock()
 			}
 		}()
