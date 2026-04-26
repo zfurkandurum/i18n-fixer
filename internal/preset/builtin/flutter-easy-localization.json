@@ -1,7 +1,9 @@
 {
   "name": "flutter-easy-localization",
   "displayName": "Flutter (easy_localization)",
-  "fileExtensions": [".dart"],
+  "fileExtensions": [
+    ".dart"
+  ],
   "i18nFunctionPatterns": [
     "['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.$]*)['\"]\\s*\\.tr\\(",
     "['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.$]*)['\"]\\s*\\.plural\\(",
@@ -16,7 +18,19 @@
     "hintText:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
     "labelText:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
     "title:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
-    "message:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]"
+    "message:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "=>[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "return[\\s]+['\"](?P<str>[^'\"]{2,})['\"]",
+    "label:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "subtitle:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "helperText:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "errorText:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "placeholder:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "actionText:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "description:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "text:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "throw[\\s]+['\"](?P<str>[^'\"]{2,})['\"]",
+    "Exception\\([\\s]*['\"](?P<str>[^'\"]{2,})['\"]"
   ],
   "hardcodedStringExclusions": [
     "^https?://",
@@ -26,7 +40,7 @@
     "^\\s*$",
     "import\\s",
     "^[a-z_]+$",
-    "^[a-zA-Z_][a-zA-Z0-9_]*(\\.[a-zA-Z0-9_]+)+"
+    "^[a-zA-Z_][a-zA-Z0-9_]*(\\.[a-zA-Z0-9_]+)+$"
   ],
   "i18nFilePatterns": [
     "**/assets/lang/**/*.json",
@@ -40,7 +54,12 @@
   "keyStyle": "nested",
   "keySeparator": ".",
   "projectMarkers": [
-    { "file": "pubspec.yaml", "containsAny": ["easy_localization"] }
+    {
+      "file": "pubspec.yaml",
+      "containsAny": [
+        "easy_localization"
+      ]
+    }
   ],
   "ignorePatterns": [
     "**/.dart_tool/**",

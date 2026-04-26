@@ -1,7 +1,9 @@
 {
   "name": "ios-swiftui",
   "displayName": "iOS (SwiftUI)",
-  "fileExtensions": [".swift"],
+  "fileExtensions": [
+    ".swift"
+  ],
   "i18nFunctionPatterns": [
     "Text\\(['\"](?P<key>[^'\"]+)['\"][\\s]*,[\\s]*bundle:",
     "String\\(localized:[\\s]*['\"](?P<key>[^'\"]+)['\"]",
@@ -12,7 +14,12 @@
     "Text\\(['\"](?P<str>[A-Z][^'\"]{2,})['\"]\\)",
     "Label\\(['\"](?P<str>[^'\"]{2,})['\"]",
     "Button\\(['\"](?P<str>[^'\"]{2,})['\"]",
-    "\\.navigationTitle\\(['\"](?P<str>[^'\"]{2,})['\"]"
+    "\\.navigationTitle\\(['\"](?P<str>[^'\"]{2,})['\"]",
+    "=>[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "return[\\s]+['\"](?P<str>[^'\"]{2,})['\"]",
+    "subtitle:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "description:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "accessibilityLabel:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]"
   ],
   "hardcodedStringExclusions": [
     "^https?://",
@@ -30,8 +37,15 @@
   "keyStyle": "flat",
   "keySeparator": ".",
   "projectMarkers": [
-    { "file": "Package.swift", "containsAny": ["SwiftUI"] },
-    { "file": "*.xcodeproj/project.pbxproj" }
+    {
+      "file": "Package.swift",
+      "containsAny": [
+        "SwiftUI"
+      ]
+    },
+    {
+      "file": "*.xcodeproj/project.pbxproj"
+    }
   ],
   "ignorePatterns": [
     "**/Pods/**",

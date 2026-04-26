@@ -1,7 +1,9 @@
 {
   "name": "ios-swiftgen",
   "displayName": "iOS (SwiftGen L10n)",
-  "fileExtensions": [".swift"],
+  "fileExtensions": [
+    ".swift"
+  ],
   "i18nFunctionPatterns": [
     "L10n\\.(?P<key>[A-Z][a-zA-Z0-9]*(?:\\.[A-Z][a-zA-Z0-9]*)+)",
     "Strings\\.(?P<key>[A-Z][a-zA-Z0-9]*(?:\\.[A-Z][a-zA-Z0-9]*)+)"
@@ -10,7 +12,12 @@
     "Text\\(['\"](?P<str>[A-Z][^'\"]{2,})['\"]\\)",
     "\\.text[\\s]*=[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
     "title:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
-    "message:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]"
+    "message:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "=>[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "return[\\s]+['\"](?P<str>[^'\"]{2,})['\"]",
+    "subtitle:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "description:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "accessibilityLabel:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]"
   ],
   "hardcodedStringExclusions": [
     "^https?://",
@@ -28,8 +35,15 @@
   "keyStyle": "flat",
   "keySeparator": ".",
   "projectMarkers": [
-    { "file": "Podfile", "containsAny": ["SwiftGen"] },
-    { "file": ".swiftgen.yml" }
+    {
+      "file": "Podfile",
+      "containsAny": [
+        "SwiftGen"
+      ]
+    },
+    {
+      "file": ".swiftgen.yml"
+    }
   ],
   "ignorePatterns": [
     "**/Pods/**",

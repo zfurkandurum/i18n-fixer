@@ -12,9 +12,9 @@ import (
 
 // ScanResult holds all findings from scanning source files.
 type ScanResult struct {
-	UsedKeys       []types.UsedKey
-	DynamicKeys    []types.DynamicKeyWarning
-	Hardcoded      []types.HardcodedString
+	UsedKeys    []types.UsedKey
+	DynamicKeys []types.DynamicKeyWarning
+	Hardcoded   []types.HardcodedString
 	// DynamicPrefixes holds key prefixes detected via dynamicPrefixPatterns
 	// (e.g. "SEASON.TIP_", "ONBOARDING."). All i18n keys that start with one
 	// of these prefixes should be excluded from the unused-key report.

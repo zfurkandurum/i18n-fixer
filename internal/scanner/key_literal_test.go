@@ -6,10 +6,10 @@ import (
 
 func TestKeyExistsInText(t *testing.T) {
 	tests := []struct {
-		name  string
-		text  string
-		key   string
-		want  bool
+		name string
+		text string
+		key  string
+		want bool
 	}{
 		{
 			name: "single-quoted literal",

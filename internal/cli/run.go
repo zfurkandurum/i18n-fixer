@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/bmatcuk/doublestar/v4"
+	"github.com/spf13/cobra"
 	"github.com/zfurkandurum/i18n-fixer/internal/analyzer"
 	"github.com/zfurkandurum/i18n-fixer/internal/config"
 	"github.com/zfurkandurum/i18n-fixer/internal/detect"
@@ -17,7 +18,6 @@ import (
 	"github.com/zfurkandurum/i18n-fixer/internal/reporter"
 	"github.com/zfurkandurum/i18n-fixer/internal/scanner"
 	"github.com/zfurkandurum/i18n-fixer/internal/types"
-	"github.com/spf13/cobra"
 )
 
 var runCmd = &cobra.Command{

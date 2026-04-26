@@ -2,10 +2,10 @@ package types
 
 // FrameworkPreset defines scanning rules for a specific framework.
 type FrameworkPreset struct {
-	Name                      string          `json:"name"`
-	DisplayName               string          `json:"displayName"`
-	FileExtensions            []string        `json:"fileExtensions"`
-	I18nFunctionPatterns      []string        `json:"i18nFunctionPatterns"`
+	Name                 string   `json:"name"`
+	DisplayName          string   `json:"displayName"`
+	FileExtensions       []string `json:"fileExtensions"`
+	I18nFunctionPatterns []string `json:"i18nFunctionPatterns"`
 	// DynamicPrefixPatterns are regex patterns (with a named "prefix" group) that
 	// detect dynamic key constructions like 'SECTION.' + variable | translate.
 	// Any key in the i18n files whose string prefix matches a found prefix is
@@ -117,10 +117,10 @@ type DuplicateValue struct {
 
 // KeyNamingIssue represents a key that violates the naming convention.
 type KeyNamingIssue struct {
-	Key        string
-	Expected   string
-	File       string
-	Locale     string
+	Key      string
+	Expected string
+	File     string
+	Locale   string
 }
 
 // AuditResult holds all findings from a scan.

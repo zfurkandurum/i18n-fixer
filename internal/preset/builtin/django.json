@@ -1,7 +1,10 @@
 {
   "name": "django",
   "displayName": "Django (Python)",
-  "fileExtensions": [".py", ".html"],
+  "fileExtensions": [
+    ".py",
+    ".html"
+  ],
   "i18nFunctionPatterns": [
     "_\\(['\"](?P<key>[^'\"]+)['\"]",
     "gettext\\(['\"](?P<key>[^'\"]+)['\"]",
@@ -15,7 +18,9 @@
     ">[\\s]*(?P<str>[A-Z][a-zA-Z0-9 ,.!?'\\-]{2,})[\\s]*<",
     "(?:placeholder|title|alt|aria-label|label)=['\"](?P<str>[^'\"]{2,})['\"]",
     "messages\\.(?:error|success|warning|info)\\(request,\\s*['\"](?P<str>[^'\"]{2,})['\"]",
-    "raise\\s+(?:ValidationError|PermissionDenied)\\(['\"](?P<str>[^'\"]{2,})['\"]"
+    "raise\\s+(?:ValidationError|PermissionDenied)\\(['\"](?P<str>[^'\"]{2,})['\"]",
+    "=>[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "return[\\s]+['\"](?P<str>[^'\"]{2,})['\"]"
   ],
   "hardcodedStringExclusions": [
     "^https?://",
@@ -39,8 +44,18 @@
   "keyStyle": "flat",
   "keySeparator": ".",
   "projectMarkers": [
-    { "file": "manage.py", "containsAny": ["django"] },
-    { "file": "settings.py", "containsAny": ["django"] }
+    {
+      "file": "manage.py",
+      "containsAny": [
+        "django"
+      ]
+    },
+    {
+      "file": "settings.py",
+      "containsAny": [
+        "django"
+      ]
+    }
   ],
   "ignorePatterns": [
     "**/__pycache__/**",

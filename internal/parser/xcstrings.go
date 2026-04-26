@@ -15,8 +15,8 @@ type xcstringsFile struct {
 }
 
 type xcstringsEntry struct {
-	Comment       string                              `json:"comment"`
-	Localizations map[string]xcstringsLocalization    `json:"localizations"`
+	Comment       string                           `json:"comment"`
+	Localizations map[string]xcstringsLocalization `json:"localizations"`
 }
 
 type xcstringsLocalization struct {

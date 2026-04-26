@@ -1,7 +1,11 @@
 {
   "name": "rails-erb",
   "displayName": "Ruby on Rails (ERB / I18n)",
-  "fileExtensions": [".rb", ".erb", ".html.erb"],
+  "fileExtensions": [
+    ".rb",
+    ".erb",
+    ".html.erb"
+  ],
   "i18nFunctionPatterns": [
     "\\bt\\(['\"](?P<key>[^'\"]+)['\"]",
     "I18n\\.t\\(['\"](?P<key>[^'\"]+)['\"]",
@@ -13,7 +17,9 @@
     "(?:placeholder|title|alt|aria-label|label):\\s*['\"](?P<str>[^'\"]{2,})['\"]",
     "(?:placeholder|title|alt|aria-label|label)=['\"](?P<str>[^'\"]{2,})['\"]",
     "flash\\[:(?:notice|alert|error)\\]\\s*=\\s*['\"](?P<str>[^'\"]{2,})['\"]",
-    "redirect_to[^,]+,\\s*notice:\\s*['\"](?P<str>[^'\"]{2,})['\"]"
+    "redirect_to[^,]+,\\s*notice:\\s*['\"](?P<str>[^'\"]{2,})['\"]",
+    "return[\\s]+['\"](?P<str>[^'\"]{2,})['\"]",
+    "raise[\\s]+['\"](?P<str>[^'\"]{2,})['\"]"
   ],
   "hardcodedStringExclusions": [
     "^https?://",
@@ -37,8 +43,15 @@
   "keyStyle": "nested",
   "keySeparator": ".",
   "projectMarkers": [
-    { "file": "Gemfile", "containsAny": ["rails"] },
-    { "file": "config/application.rb" }
+    {
+      "file": "Gemfile",
+      "containsAny": [
+        "rails"
+      ]
+    },
+    {
+      "file": "config/application.rb"
+    }
   ],
   "ignorePatterns": [
     "**/tmp/**",

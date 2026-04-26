@@ -1,7 +1,9 @@
 {
   "name": "ios-swift",
   "displayName": "iOS (Swift)",
-  "fileExtensions": [".swift"],
+  "fileExtensions": [
+    ".swift"
+  ],
   "i18nFunctionPatterns": [
     "NSLocalizedString\\(['\"](?P<key>[^'\"]+)['\"]",
     "String\\(localized:[\\s]*['\"](?P<key>[^'\"]+)['\"]",
@@ -12,7 +14,12 @@
     "\\.text[\\s]*=[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
     "title:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
     "message:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
-    "placeholder:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]"
+    "placeholder:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "=>[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "return[\\s]+['\"](?P<str>[^'\"]{2,})['\"]",
+    "subtitle:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "description:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "accessibilityLabel:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]"
   ],
   "hardcodedStringExclusions": [
     "^https?://",
@@ -29,7 +36,9 @@
   "keyStyle": "flat",
   "keySeparator": ".",
   "projectMarkers": [
-    { "file": "Package.swift" }
+    {
+      "file": "Package.swift"
+    }
   ],
   "ignorePatterns": [
     "**/Pods/**",

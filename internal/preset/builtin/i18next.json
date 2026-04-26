@@ -1,7 +1,12 @@
 {
   "name": "i18next",
   "displayName": "i18next (standalone)",
-  "fileExtensions": [".ts", ".js", ".mjs", ".cjs"],
+  "fileExtensions": [
+    ".ts",
+    ".js",
+    ".mjs",
+    ".cjs"
+  ],
   "i18nFunctionPatterns": [
     "i18next\\.t\\(['\"](?P<key>[^'\"]+)['\"]",
     "i18n\\.t\\(['\"](?P<key>[^'\"]+)['\"]",
@@ -10,7 +15,9 @@
   "hardcodedStringPatterns": [
     "res\\.(?:send|json)\\(['\"](?P<str>[A-Z][^'\"]{2,})['\"]",
     "throw new Error\\(['\"](?P<str>[^'\"]{2,})['\"]",
-    "new Error\\(['\"](?P<str>[^'\"]{2,})['\"]"
+    "new Error\\(['\"](?P<str>[^'\"]{2,})['\"]",
+    "=>[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "return[\\s]+['\"](?P<str>[^'\"]{2,})['\"]"
   ],
   "hardcodedStringExclusions": [
     "^https?://",
@@ -32,7 +39,12 @@
   "keyStyle": "nested",
   "keySeparator": ".",
   "projectMarkers": [
-    { "file": "package.json", "containsAny": ["\"i18next\""] }
+    {
+      "file": "package.json",
+      "containsAny": [
+        "\"i18next\""
+      ]
+    }
   ],
   "ignorePatterns": [
     "**/node_modules/**",

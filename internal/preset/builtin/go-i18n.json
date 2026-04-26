@@ -1,7 +1,11 @@
 {
   "name": "go-i18n",
   "displayName": "Go (go-i18n / html/template)",
-  "fileExtensions": [".go", ".html", ".tmpl"],
+  "fileExtensions": [
+    ".go",
+    ".html",
+    ".tmpl"
+  ],
   "i18nFunctionPatterns": [
     "i18n\\.MustLocalize\\(&i18n\\.LocalizeConfig\\{MessageID:\\s*['\"](?P<key>[^'\"]+)['\"]",
     "localizer\\.MustLocalize\\(&i18n\\.LocalizeConfig\\{MessageID:\\s*['\"](?P<key>[^'\"]+)['\"]",
@@ -15,7 +19,8 @@
     "(?:placeholder|title|alt|aria-label|label)=['\"](?P<str>[^'\"]{2,})['\"]",
     "fmt\\.Fprintf\\([^,]+,\\s*['\"](?P<str>[A-Z][^'\"]{2,})['\"]",
     "errors\\.New\\(['\"](?P<str>[^'\"]{2,})['\"]",
-    "fmt\\.Errorf\\(['\"](?P<str>[^'\"]{2,})['\"]"
+    "fmt\\.Errorf\\(['\"](?P<str>[^'\"]{2,})['\"]",
+    "return[\\s]+['\"](?P<str>[^'\"]{2,})['\"]"
   ],
   "hardcodedStringExclusions": [
     "^https?://",
@@ -44,7 +49,13 @@
   "keyStyle": "flat",
   "keySeparator": ".",
   "projectMarkers": [
-    { "file": "go.mod", "containsAny": ["nicksnyder/go-i18n", "go-i18n"] }
+    {
+      "file": "go.mod",
+      "containsAny": [
+        "nicksnyder/go-i18n",
+        "go-i18n"
+      ]
+    }
   ],
   "ignorePatterns": [
     "**/vendor/**",

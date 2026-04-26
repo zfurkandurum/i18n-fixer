@@ -1,7 +1,9 @@
 {
   "name": "flutter-getx",
   "displayName": "Flutter (GetX localization)",
-  "fileExtensions": [".dart"],
+  "fileExtensions": [
+    ".dart"
+  ],
   "i18nFunctionPatterns": [
     "['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.]*)['\"]\\s*\\.tr[^a-zA-Z0-9_(]",
     "['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.]*)['\"]\\s*\\.trArgs\\("
@@ -11,7 +13,19 @@
     "tooltip:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
     "hintText:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
     "labelText:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
-    "title:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]"
+    "title:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "=>[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "return[\\s]+['\"](?P<str>[^'\"]{2,})['\"]",
+    "label:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "subtitle:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "helperText:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "errorText:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "placeholder:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "actionText:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "description:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "text:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "throw[\\s]+['\"](?P<str>[^'\"]{2,})['\"]",
+    "Exception\\([\\s]*['\"](?P<str>[^'\"]{2,})['\"]"
   ],
   "hardcodedStringExclusions": [
     "^https?://",
@@ -21,7 +35,7 @@
     "^\\s*$",
     "import\\s",
     "^[a-z_]+$",
-    "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)+"
+    "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)+$"
   ],
   "i18nFilePatterns": [
     "**/assets/locales/**/*.json",
@@ -35,7 +49,12 @@
   "keyStyle": "flat",
   "keySeparator": "_",
   "projectMarkers": [
-    { "file": "pubspec.yaml", "containsAny": ["get:"] }
+    {
+      "file": "pubspec.yaml",
+      "containsAny": [
+        "get:"
+      ]
+    }
   ],
   "ignorePatterns": [
     "**/.dart_tool/**",

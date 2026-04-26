@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/zfurkandurum/i18n-fixer/internal/preset"
 	"github.com/spf13/cobra"
+	"github.com/zfurkandurum/i18n-fixer/internal/preset"
 )
 
 var presetsCmd = &cobra.Command{

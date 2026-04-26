@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/zfurkandurum/i18n-fixer/internal/detect"
 	"github.com/spf13/cobra"
+	"github.com/zfurkandurum/i18n-fixer/internal/detect"
 )
 
 const configTemplate = `{

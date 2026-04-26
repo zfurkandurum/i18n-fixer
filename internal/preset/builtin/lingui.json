@@ -1,7 +1,12 @@
 {
   "name": "lingui",
   "displayName": "LinguiJS",
-  "fileExtensions": [".tsx", ".ts", ".jsx", ".js"],
+  "fileExtensions": [
+    ".tsx",
+    ".ts",
+    ".jsx",
+    ".js"
+  ],
   "i18nFunctionPatterns": [
     "\\bt`(?P<key>[^`]+)`",
     "\\bmsg`(?P<key>[^`]+)`",
@@ -10,7 +15,12 @@
   ],
   "hardcodedStringPatterns": [
     ">[\\s]*(?P<str>[A-Z][a-zA-Z0-9 ,.!?'\\-]{2,})[\\s]*<",
-    "(?:placeholder|title|alt|aria-label|label)=['\"](?P<str>[^'\"]{2,})['\"]"
+    "(?:placeholder|title|alt|aria-label|label)=['\"](?P<str>[^'\"]{2,})['\"]",
+    "(?:subtitle|description|helperText|errorText|caption|heading|header|footer)=['\\\"](?P<str>[^'\\\"]{2,})['\\\"]",
+    "=>[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "return[\\s]+['\"](?P<str>[^'\"]{2,})['\"]",
+    "throw new Error\\(['\"](?P<str>[^'\"]{2,})['\"]",
+    "(?:subtitle|description|helperText|errorText|caption|heading|header|footer)=['\"](?P<str>[^'\"]{2,})['\"]"
   ],
   "hardcodedStringExclusions": [
     "^https?://",
@@ -34,7 +44,14 @@
   "keyStyle": "flat",
   "keySeparator": ".",
   "projectMarkers": [
-    { "file": "package.json", "containsAny": ["@lingui/core", "@lingui/react", "@lingui/macro"] }
+    {
+      "file": "package.json",
+      "containsAny": [
+        "@lingui/core",
+        "@lingui/react",
+        "@lingui/macro"
+      ]
+    }
   ],
   "ignorePatterns": [
     "**/node_modules/**",

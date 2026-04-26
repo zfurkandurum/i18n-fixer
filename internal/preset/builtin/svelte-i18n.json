@@ -1,7 +1,11 @@
 {
   "name": "svelte-i18n",
   "displayName": "Svelte (svelte-i18n)",
-  "fileExtensions": [".svelte", ".ts", ".js"],
+  "fileExtensions": [
+    ".svelte",
+    ".ts",
+    ".js"
+  ],
   "i18nFunctionPatterns": [
     "\\$_\\(['\"](?P<key>[^'\"]+)['\"]",
     "\\$t\\(['\"](?P<key>[^'\"]+)['\"]",
@@ -9,7 +13,10 @@
   ],
   "hardcodedStringPatterns": [
     ">[\\s]*(?P<str>[A-Z][a-zA-Z0-9 ,.!?'\\-]{2,})[\\s]*<",
-    "(?:placeholder|title|alt|aria-label|label)=\"(?P<str>[^\"]{2,})\""
+    "(?:placeholder|title|alt|aria-label|label)=\"(?P<str>[^\"]{2,})\"",
+    "=>[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "return[\\s]+['\"](?P<str>[^'\"]{2,})['\"]",
+    "throw new Error\\(['\"](?P<str>[^'\"]{2,})['\"]"
   ],
   "hardcodedStringExclusions": [
     "^https?://",
@@ -31,7 +38,12 @@
   "keyStyle": "nested",
   "keySeparator": ".",
   "projectMarkers": [
-    { "file": "package.json", "containsAny": ["svelte-i18n"] }
+    {
+      "file": "package.json",
+      "containsAny": [
+        "svelte-i18n"
+      ]
+    }
   ],
   "ignorePatterns": [
     "**/node_modules/**",

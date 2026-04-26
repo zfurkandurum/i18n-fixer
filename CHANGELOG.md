@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.9] - 2026-04-26
+
+### Fixed
+
+- **Strings inside `return`, `=>`, and `throw` are now detected.** Previously the scanner only matched explicit widget/HTML-attribute contexts (`Text(...)`, `placeholder="..."`, etc.), so hardcoded user-facing literals hidden inside enum extensions, switch arrow arms, switch/case bodies, error throws, and arrow-getter returns slipped through silently. All 31 framework presets now include language-appropriate `return`/`=>`/`throw`/`raise` patterns. Extracted strings still pass through the existing exclusion chain — translation keys (`'common.cancel'.tr()`), `$variable` interpolation, asset paths, etc. remain ignored, so this change adds coverage without flooding reports with false positives.
+- **Dotted-identifier exclusion now anchored.** All four Flutter presets had `^[a-zA-Z_][a-zA-Z0-9_]*(\.[a-zA-Z0-9_]+)+` (no end anchor), which silently swallowed sentences that happened to start with a dotted token (`"e.g. Jane Doe"`, `"i.e. ..."`). The `$` end-anchor restores the intended "entire string is a translation key" semantics.
+
+### Added
+
+- **Expanded named-parameter coverage per language.**
+  - Dart (4 presets): `label:`, `subtitle:`, `helperText:`, `errorText:`, `placeholder:`, `actionText:`, `description:`, `text:`, `throw '...'`, `Exception('...')`.
+  - Swift (4 iOS presets): `subtitle:`, `description:`, `accessibilityLabel:`.
+  - Kotlin (Android, Compose): `description=`, `supportingText=`, `throw *Exception(...)`.
+  - JS/TS (React, Next, Lingui, etc.): JSX attributes `subtitle`, `description`, `helperText`, `errorText`, `caption`, `heading`, `header`, `footer`; `throw new Error('...')` where missing.
+  - Python (Django), Ruby (Rails), PHP (Laravel), Go (go-i18n): `return` literals; Ruby also gets `raise '...'`.
+
+### Tests
+
+- New `internal/scanner/testdata/sample_dart_enums.dart` fixture and `TestScanHardcodedDartEnumsAndReturns` covering arrow switch arms, classic `case … : return …;`, `throw '…'`, `throw Exception('…')`, and the full extended named-parameter list. Translation keys (`'common.cancel'.tr()`, `'foo.bar.$name'.tr()`) and interpolated values remain excluded.
+
 ## [0.3.2] - 2026-04-07
 
 ### Fixed

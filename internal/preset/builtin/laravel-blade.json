@@ -1,7 +1,10 @@
 {
   "name": "laravel-blade",
   "displayName": "Laravel (Blade / PHP)",
-  "fileExtensions": [".php", ".blade.php"],
+  "fileExtensions": [
+    ".php",
+    ".blade.php"
+  ],
   "i18nFunctionPatterns": [
     "__\\(['\"](?P<key>[^'\"]+)['\"]",
     "trans\\(['\"](?P<key>[^'\"]+)['\"]",
@@ -13,7 +16,10 @@
     ">[\\s]*(?P<str>[A-Z][a-zA-Z0-9 ,.!?'\\-]{2,})[\\s]*<",
     "(?:placeholder|title|alt|aria-label|label)=['\"](?P<str>[^'\"]{2,})['\"]",
     "->with\\('(?:message|error|success|notice)',\\s*['\"](?P<str>[^'\"]{2,})['\"]",
-    "session\\(\\)->flash\\('[^']+',\\s*['\"](?P<str>[^'\"]{2,})['\"]"
+    "session\\(\\)->flash\\('[^']+',\\s*['\"](?P<str>[^'\"]{2,})['\"]",
+    "=>[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
+    "return[\\s]+['\"](?P<str>[^'\"]{2,})['\"]",
+    "throw new Error\\(['\"](?P<str>[^'\"]{2,})['\"]"
   ],
   "hardcodedStringExclusions": [
     "^https?://",
@@ -38,8 +44,18 @@
   "keyStyle": "flat",
   "keySeparator": ".",
   "projectMarkers": [
-    { "file": "artisan", "containsAny": ["laravel"] },
-    { "file": "composer.json", "containsAny": ["laravel/framework"] }
+    {
+      "file": "artisan",
+      "containsAny": [
+        "laravel"
+      ]
+    },
+    {
+      "file": "composer.json",
+      "containsAny": [
+        "laravel/framework"
+      ]
+    }
   ],
   "ignorePatterns": [
     "**/vendor/**",
