@@ -1,0 +1,20 @@
+{
+  "items": {
+    "count": {
+      "zero": "No items",
+      "one": "{} item",
+      "other": "{} items"
+    },
+    "subtitle": "List of items"
+  },
+  "messages": {
+    "unread": {
+      "one": "1 unread message",
+      "other": "{} unread messages"
+    }
+  },
+  "size": {
+    "small": "Small",
+    "other": "Other size"
+  }
+}

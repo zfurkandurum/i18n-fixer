@@ -53,7 +53,9 @@ func Scan(rootDir string, preset types.FrameworkPreset) (*ScanResult, error) {
 		go func() {
 			defer wg.Done()
 			for filePath := range fileCh {
-				keys, dynWarnings := ScanKeyUsage(filePath, keyPatterns)
+				keys, dynWarnings, inferredPrefixes := ScanKeyUsage(
+					filePath, preset.KeySeparator, keyPatterns,
+				)
 				hardcoded := ScanHardcoded(filePath, hardcodedPatterns, exclusionPatterns)
 				prefixes := ScanDynamicPrefixes(filePath, prefixPatterns)
 
@@ -62,6 +64,7 @@ func Scan(rootDir string, preset types.FrameworkPreset) (*ScanResult, error) {
 				result.DynamicKeys = append(result.DynamicKeys, dynWarnings...)
 				result.Hardcoded = append(result.Hardcoded, hardcoded...)
 				result.DynamicPrefixes = append(result.DynamicPrefixes, prefixes...)
+				result.DynamicPrefixes = append(result.DynamicPrefixes, inferredPrefixes...)
 				mu.Unlock()
 			}
 		}()

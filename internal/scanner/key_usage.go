@@ -4,20 +4,38 @@ import (
 	"bufio"
 	"os"
 	"regexp"
+	"strings"
 
 	"github.com/zfurkandurum/i18n-fixer/internal/types"
 )
 
 // ScanKeyUsage scans a source file for i18n function calls and extracts keys.
-func ScanKeyUsage(filePath string, patterns []*regexp.Regexp) ([]types.UsedKey, []types.DynamicKeyWarning) {
+//
+// Returns three things:
+//   - resolved static keys (definite key references)
+//   - dynamic-key warnings (keys with runtime interpolation/concat)
+//   - inferred dynamic prefixes — when a captured key is dynamic but a usable
+//     static prefix can be extracted (e.g. `'a.b.${var}'` → `a.b.`), the
+//     prefix is returned so the unused-key analyzer can mark all keys under
+//     that prefix as used.
+//
+// `keySeparator` (typically ".") gates prefix inference: an extracted prefix
+// is only emitted if it ends with the separator, to avoid false matches like
+// `abc$d` extracting "abc" and shadowing unrelated top-level keys.
+func ScanKeyUsage(filePath, keySeparator string, patterns []*regexp.Regexp) (
+	[]types.UsedKey,
+	[]types.DynamicKeyWarning,
+	[]string,
+) {
 	f, err := os.Open(filePath)
 	if err != nil {
-		return nil, nil
+		return nil, nil, nil
 	}
 	defer f.Close()
 
 	var keys []types.UsedKey
 	var warnings []types.DynamicKeyWarning
+	var inferred []string
 
 	scanner := bufio.NewScanner(f)
 	lineNum := 0
@@ -49,6 +67,9 @@ func ScanKeyUsage(filePath string, patterns []*regexp.Regexp) ([]types.UsedKey, 
 						File:          filePath,
 						Line:          lineNum,
 					})
+					if p := extractStaticPrefix(key, keySeparator); p != "" {
+						inferred = append(inferred, p)
+					}
 				} else {
 					keys = append(keys, types.UsedKey{
 						Key:      key,
@@ -62,7 +83,56 @@ func ScanKeyUsage(filePath string, patterns []*regexp.Regexp) ([]types.UsedKey, 
 		}
 	}
 
-	return keys, warnings
+	return keys, warnings, inferred
+}
+
+// dynamicMarkers lists substrings whose first occurrence in a captured i18n
+// key marks the start of an interpolation/concat. They cover the common
+// runtime composition forms across frameworks:
+//
+//   - `${`   JS/TS template literals, Dart, Kotlin, PHP
+//   - `$`    Dart bare interpolation (`$var`), PHP `$var`
+//   - `#{`   Ruby
+//   - `\(`   Swift
+//   - `{`    Python f-string (also covers `${` since `$` precedes `{`)
+//   - `+`    string concatenation (e.g. `"a.b." + var`)
+//   - "`"    stray template literal start (defensive)
+//   - " "    whitespace inside a captured key implies concatenation/format
+var dynamicMarkers = []string{"${", "$", "#{", "\\(", "{", "+", "`", " "}
+
+// extractStaticPrefix returns the static portion of a captured-but-dynamic
+// key up to (and including) the last keySeparator before the first dynamic
+// marker. Returns "" when no usable prefix exists.
+//
+// Examples (separator="."):
+//
+//	"a.b.${var}"      -> "a.b."
+//	"a.${var}.c"      -> "a."
+//	"a.\\(var)"       -> "a."     // Swift
+//	"a.#{var}"        -> "a."     // Ruby
+//	"a.{var}"         -> "a."     // Python f-string
+//	"a.b.c"           -> ""       // no dynamic marker
+//	"${var}.foo"      -> ""       // no static prefix before marker
+//	"abc$d"           -> ""       // doesn't end with separator
+func extractStaticPrefix(key, sep string) string {
+	if sep == "" {
+		return ""
+	}
+	minIdx := -1
+	for _, marker := range dynamicMarkers {
+		i := strings.Index(key, marker)
+		if i >= 0 && (minIdx == -1 || i < minIdx) {
+			minIdx = i
+		}
+	}
+	if minIdx <= 0 {
+		return ""
+	}
+	static := key[:minIdx]
+	if !strings.HasSuffix(static, sep) {
+		return ""
+	}
+	return static
 }
 
 // ScanDynamicPrefixes scans a source file for dynamic prefix patterns and returns

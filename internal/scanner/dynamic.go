@@ -5,12 +5,12 @@ import "strings"
 // IsDynamicKey checks if a key contains dynamic/computed parts
 // that cannot be statically resolved.
 func IsDynamicKey(key string) bool {
-	// Template literals: ${variable}
+	// JS/TS/Dart/Kotlin/PHP template literal: ${variable}
 	if strings.Contains(key, "${") {
 		return true
 	}
 
-	// Dart string interpolation: $variable (without braces)
+	// Dart/PHP bare-variable interpolation: $variable (without braces)
 	if strings.Contains(key, "$") {
 		return true
 	}
@@ -22,6 +22,22 @@ func IsDynamicKey(key string) bool {
 
 	// Backtick (template literal wrapper)
 	if strings.Contains(key, "`") {
+		return true
+	}
+
+	// Ruby string interpolation: #{variable}
+	if strings.Contains(key, "#{") {
+		return true
+	}
+
+	// Swift string interpolation: \(variable)
+	if strings.Contains(key, "\\(") {
+		return true
+	}
+
+	// Python f-string interpolation or stray brace: {variable}
+	// (Static i18n keys never legitimately contain `{`.)
+	if strings.Contains(key, "{") {
 		return true
 	}
 

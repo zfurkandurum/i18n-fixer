@@ -117,6 +117,41 @@ func TestFindUnusedKeysDynamicPrefixes(t *testing.T) {
 	}
 }
 
+// TestFindUnusedKeysDynamicPrefixRegression covers the integration between
+// the scanner's inferred-prefix output (Fix 2) and the unused-key analyzer.
+// When code interpolates a key like `'a.b.${var}'.tr()`, the scanner emits
+// an inferred prefix `a.b.`. Sub-keys defined under that prefix in the
+// translation file must NOT be flagged as unused even though no static
+// reference points to them.
+func TestFindUnusedKeysDynamicPrefixRegression(t *testing.T) {
+	// No static UsedKey references — runtime resolves the suffix.
+	usedKeys := []types.UsedKey{}
+
+	i18nEntries := []types.I18nEntry{
+		{Key: "a.b.x", File: "en.json", Locale: "en"},
+		{Key: "a.b.y", File: "en.json", Locale: "en"},
+		{Key: "a.c", File: "en.json", Locale: "en"}, // outside prefix → unused
+	}
+
+	dynamicPrefixes := []string{"a.b."}
+	issues := FindUnusedKeys(usedKeys, i18nEntries, nil, dynamicPrefixes)
+
+	unused := make(map[string]bool)
+	for _, issue := range issues {
+		unused[issue.Key] = true
+	}
+
+	if unused["a.b.x"] {
+		t.Error("a.b.x should be excluded via inferred prefix a.b.")
+	}
+	if unused["a.b.y"] {
+		t.Error("a.b.y should be excluded via inferred prefix a.b.")
+	}
+	if !unused["a.c"] {
+		t.Error("a.c should still be reported (outside the inferred prefix)")
+	}
+}
+
 func TestKeyMatchesPattern(t *testing.T) {
 	tests := []struct {
 		key     string

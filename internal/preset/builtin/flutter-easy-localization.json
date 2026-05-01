@@ -12,6 +12,10 @@
     "\\btr\\(['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.$]+)['\"]",
     "\\btranslate\\(['\"](?P<key>[a-zA-Z_][a-zA-Z0-9_.$]+)['\"]"
   ],
+  "dynamicPrefixPatterns": [
+    "['\"](?P<prefix>[a-zA-Z_][a-zA-Z0-9_.]*?)\\$\\{[^}]+\\}[^'\"]*['\"]\\s*\\.(?:tr|plural|trPlural)\\(",
+    "['\"](?P<prefix>[a-zA-Z_][a-zA-Z0-9_.]*?)\\$[a-zA-Z_]\\w*[^'\"]*['\"]\\s*\\.(?:tr|plural|trPlural)\\("
+  ],
   "hardcodedStringPatterns": [
     "Text\\([\\s]*['\"](?P<str>[^'\"]{2,})['\"]",
     "tooltip:[\\s]*['\"](?P<str>[^'\"]{2,})['\"]",

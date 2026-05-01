@@ -7,6 +7,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.10] - 2026-05-01
+
+### Fixed
+
+- **ICU plural objects no longer reported as missing keys.** When a translation
+  file stores a plural form as a nested object whose leaf keys are `zero`/`one`/
+  `two`/`few`/`many`/`other` (the standard payload shape for easy_localization
+  `.plural()`, i18next plural objects, Rails YAML pluralization, etc.), the
+  parser now collapses that object into a single entry under the parent key
+  using the `other` form as the canonical value. Previously the parser emitted
+  three flat sub-keys (e.g. `a.b.zero`, `a.b.one`, `a.b.other`) and never
+  registered the parent (`a.b`), so callers like `t('a.b', {count})` or
+  `'a.b'.plural(count)` were incorrectly flagged as missing in every locale.
+  Non-plural nested objects, mixed-key objects (`{small, other}`), and objects
+  missing the mandatory `other` form are unaffected.
+- **Interpolated keys no longer drop their static prefix.** When a captured
+  i18n key contains runtime interpolation — JS/TS/Dart/Kotlin/PHP `${var}`,
+  Dart bare `$var`, Ruby `#{var}`, Swift `\(var)`, Python f-string `{var}`,
+  or string concat `"a.b." + var` — the scanner now extracts the static
+  prefix up to the last separator before the interpolation and registers it
+  as a dynamic prefix. The unused-key analyzer treats every defined key
+  starting with that prefix as used, eliminating bulk false-positive
+  "unused" reports for runtime-resolved key spaces (typical pattern: enum
+  `displayName` getters that build keys from the enum value's name).
+- **`IsDynamicKey` recognises three additional interpolation flavours:**
+  Ruby `#{`, Swift `\(`, and Python `{var}` (as well as any stray `{` —
+  legitimately-typed static i18n keys never contain a brace). Combined with
+  the existing `${`/`$`/`+`/backtick/camelCase heuristics, the dynamic-key
+  detector now covers the dominant interpolation syntaxes across the
+  framework presets bundled with this tool.
+
+### Added
+
+- **`dynamicPrefixPatterns` regex on `flutter-easy-localization` and
+  `flutter-getx` presets.** These two presets use a strict captured-key
+  character class (`[a-zA-Z_][a-zA-Z0-9_.$]*`) that fails to match any call
+  containing `${...}` interpolation, so the scanner-level prefix inference
+  alone could not help them. The new patterns explicitly capture the static
+  prefix from interpolated `.tr()`/`.plural()`/`.trArgs()` calls; the
+  existing `ScanDynamicPrefixes` machinery wires them into the unused-key
+  filter. Other framework presets (i18next, vue-i18n, ngx-translate,
+  rails-erb, django, react-i18next, etc.) use a loose `[^'"]+` capture
+  class and benefit from the scanner-level fix automatically without any
+  preset edits.
+
+### Tests
+
+- `TestParseJSONPlural` and `TestParseYAMLPlural` cover the plural-collapse
+  cases (full ICU set, one+other only, mixed non-category siblings, missing
+  `other`, non-string values).
+- `TestIsPluralObject` table-driven sub-cases.
+- `TestExtractStaticPrefix` table-driven sub-cases for every supported
+  interpolation flavour.
+- `TestScanKeyUsageInfersPrefixes` exercises the end-to-end flow: capture
+  → dynamic warning → inferred prefix.
+- `TestFindMissingKeysPluralRegression` and `TestFindUnusedKeysDynamicPrefixRegression`
+  guard against re-introducing either bug at the analyzer level.
+
 ## [0.3.9] - 2026-04-26
 
 ### Fixed

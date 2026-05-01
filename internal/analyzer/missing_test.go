@@ -50,6 +50,28 @@ func TestFindMissingKeys(t *testing.T) {
 	}
 }
 
+// TestFindMissingKeysPluralRegression covers the case where a translation
+// file defines a plural object (e.g. {"a":{"b":{"zero","one","other"}}}).
+// After Fix 1, the parser collapses such objects into a single entry under
+// the parent key. Code referring to that parent key (`'a.b'.plural(count)`,
+// `t('a.b', {count})`, etc.) must NOT be flagged as missing.
+func TestFindMissingKeysPluralRegression(t *testing.T) {
+	usedKeys := []types.UsedKey{
+		{Key: "a.b", File: "src/foo.ts", Line: 10},
+	}
+
+	// Parser output after Fix 1: parent collapsed into one entry per locale.
+	i18nEntries := []types.I18nEntry{
+		{Key: "a.b", Locale: "en", Value: "{} items"},
+		{Key: "a.b", Locale: "fr", Value: "{} éléments"},
+	}
+
+	issues := FindMissingKeys(usedKeys, i18nEntries, []string{"en", "fr"})
+	if len(issues) != 0 {
+		t.Errorf("expected 0 missing keys for plural-collapsed parent, got %d: %v", len(issues), issues)
+	}
+}
+
 func TestFindMissingKeysAllPresent(t *testing.T) {
 	usedKeys := []types.UsedKey{
 		{Key: "common.save", File: "src/App.tsx", Line: 10},

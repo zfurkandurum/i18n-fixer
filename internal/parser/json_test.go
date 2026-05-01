@@ -53,6 +53,104 @@ func TestParseJSONNested(t *testing.T) {
 	}
 }
 
+func TestParseJSONPlural(t *testing.T) {
+	entries, err := ParseJSON(filepath.Join(testdataDir(), "plural.json"), ".")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	keys := make(map[string]string)
+	for _, e := range entries {
+		keys[e.Key] = e.Value
+	}
+
+	// items.count is an ICU plural object with all required categories.
+	// It should be collapsed into a single entry whose value is the `other`
+	// form, and no sub-keys should be emitted.
+	if v, ok := keys["items.count"]; !ok {
+		t.Errorf("expected items.count to be present (collapsed plural), got map=%v", keys)
+	} else if v != "{} items" {
+		t.Errorf("expected items.count value=\"{} items\" (other form), got %q", v)
+	}
+	for _, sub := range []string{"items.count.zero", "items.count.one", "items.count.other"} {
+		if _, ok := keys[sub]; ok {
+			t.Errorf("did not expect sub-key %q to be emitted (parent is plural)", sub)
+		}
+	}
+
+	// items.subtitle sits next to a plural sibling but is itself a flat string;
+	// it must still be flattened normally.
+	if keys["items.subtitle"] != "List of items" {
+		t.Errorf("expected items.subtitle=\"List of items\", got %q", keys["items.subtitle"])
+	}
+
+	// messages.unread has one+other (no zero/two/few/many) — still a valid
+	// plural per ICU (only `other` is mandatory).
+	if v, ok := keys["messages.unread"]; !ok || v != "{} unread messages" {
+		t.Errorf("expected messages.unread to be collapsed (other form), got %q (present=%v)", v, ok)
+	}
+
+	// size has `other` but also `small` (non-category) — must NOT be treated
+	// as plural. Both leaf keys flatten as before.
+	if _, ok := keys["size"]; ok {
+		t.Errorf("did not expect size to be collapsed (mixed keys)")
+	}
+	if keys["size.small"] != "Small" || keys["size.other"] != "Other size" {
+		t.Errorf("expected size.small and size.other to flatten normally, got %v", keys)
+	}
+}
+
+func TestIsPluralObject(t *testing.T) {
+	tests := []struct {
+		name  string
+		input map[string]interface{}
+		want  bool
+	}{
+		{
+			name:  "empty",
+			input: map[string]interface{}{},
+			want:  false,
+		},
+		{
+			name:  "missing other",
+			input: map[string]interface{}{"one": "a", "two": "b"},
+			want:  false,
+		},
+		{
+			name:  "all categories",
+			input: map[string]interface{}{"zero": "z", "one": "o", "two": "t", "few": "f", "many": "m", "other": "x"},
+			want:  true,
+		},
+		{
+			name:  "one+other",
+			input: map[string]interface{}{"one": "a", "other": "b"},
+			want:  true,
+		},
+		{
+			name:  "non-category mixed",
+			input: map[string]interface{}{"one": "a", "other": "b", "foo": "c"},
+			want:  false,
+		},
+		{
+			name:  "non-string value",
+			input: map[string]interface{}{"other": map[string]interface{}{"nested": "x"}},
+			want:  false,
+		},
+		{
+			name:  "only other",
+			input: map[string]interface{}{"other": "x"},
+			want:  true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := isPluralObject(tt.input); got != tt.want {
+				t.Errorf("isPluralObject(%v) = %v, want %v", tt.input, got, tt.want)
+			}
+		})
+	}
+}
+
 func TestParseJSONEmpty(t *testing.T) {
 	entries, err := ParseJSON(filepath.Join(testdataDir(), "empty.json"), ".")
 	if err != nil {
